@@ -1,0 +1,37 @@
+{
+  "name": "skip-postgres",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist node_modules",
+    "format": "prettier --write 'src/**/*.{js,ts}'",
+    "client": "node --loader ts-node/esm src/client.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.10.0",
+  "devDependencies": {
+    "@skipruntime/core": "^0.0.16",
+    "@skipruntime/helpers": "^0.0.16",
+    "@skipruntime/server": "^0.0.16",
+    "@types/express": "^5.0.2",
+    "@types/node": "^22.15.20",
+    "@types/pg": "^8.15.2",
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
+    "@typescript-eslint/parser": "^8.32.1",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.5.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "type": "module",
+  "dependencies": {
+    "@skip-adapter/postgres": "^0.0.16",
+    "express": "^5.1.0",
+    "pg": "^8.16.0"
+  }
+}

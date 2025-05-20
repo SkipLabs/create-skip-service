@@ -1,0 +1,50 @@
+{
+  "name": "create-skip-service",
+  "version": "1.0.1",
+  "description": "CLI tool to create and initialize Skip services with customizable templates",
+  "bin": {
+    "create-skip-service": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "keywords": [
+    "skip",
+    "service",
+    "template"
+  ],
+  "main": "src/cli.ts",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SkipLabs/create-skip-service.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SkipLabs/create-skip-service/issues"
+  },
+  "homepage": "https://github.com/SkipLabs/create-skip-service#readme",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist && rm -rf node_modules",
+    "format": "prettier --write ."
+  },
+  "author": "SkipLabs",
+  "license": "MIT",
+  "packageManager": "pnpm@10.11.0",
+  "devDependencies": {
+    "@types/node": "^22.15.19",
+    "@types/yargs": "^17.0.33",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "execa": "^9.5.3",
+    "prettier": "^3.5.3",
+    "yargs": "^17.7.2"
+  }
+}
