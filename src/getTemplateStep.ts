@@ -5,10 +5,9 @@ import { writeFileSync, mkdirSync } from "fs";
 import { CreateSkipServiceError } from "./errors.js";
 
 const TEMPLATE_REPO_DEFAULT = "SkipLabs/create-skip-service";
-const TEMPLATE_REPO = "SkipLabs/skip";
-const GITHUB_API = "https://api.github.com";
 const TEMPLATE_PATH_DEFAULT = "templates";
-const TEMPLATE_PATH = "examples";
+const GITHUB_API = "https://api.github.com";
+
 
 interface GitHubContent {
   name: string;
@@ -57,7 +56,7 @@ const downloadDirectory = async (
       mkdirSync(itemPath, { recursive: true });
       await downloadDirectory(
         config,
-        `${GITHUB_API}/repos/${TEMPLATE_REPO}/contents/${item.path}`,
+        `${GITHUB_API}/repos/${TEMPLATE_REPO_DEFAULT}/contents/${item.path}`,
         itemPath,
       );
     }
@@ -109,17 +108,13 @@ const getTemplateStep = async (config: Config) => {
   const template = config.template;
   logger.logTitle(` - Getting template:'${template}'`);
   try {
-    await downloadTemplate(config, TEMPLATE_REPO, TEMPLATE_PATH);
+    await downloadTemplate(config, TEMPLATE_REPO_DEFAULT, TEMPLATE_PATH_DEFAULT);
   } catch (error) {
     if (template !== "default") {
       logger.yellow(
-        `Template not found in main repo, trying default template...`,
+        `Template not found in main repo...`,
       );
-      await downloadTemplate(
-        config,
-        TEMPLATE_REPO_DEFAULT,
-        TEMPLATE_PATH_DEFAULT,
-      );
+      throw error;
     } else {
       throw error;
     }
