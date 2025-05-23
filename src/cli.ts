@@ -26,7 +26,7 @@ const packageJson = JSON.parse(
 
 interface Arguments {
   project_name: string;
-  git: boolean;
+  nogit: boolean;
   verbose: boolean;
   quiet: boolean;
   force: boolean;
@@ -48,11 +48,10 @@ const read_cli_arguments = (): Config => {
             type: "string",
             demandOption: true,
           })
-          .option("git", {
-            alias: "g",
-            describe: "Initialize a git repository",
+          .option("nogit", {
+            describe: "Do not initialize a git repository",
             type: "boolean",
-            default: true,
+            default: false,
           })
           .option("template", {
             alias: "t",
@@ -82,6 +81,7 @@ const read_cli_arguments = (): Config => {
     )
     .help()
     .alias("help", "h")
+    .strict()
     .parse() as unknown as Arguments;
 
   if (argv.project_name === undefined) {
@@ -100,7 +100,7 @@ const read_cli_arguments = (): Config => {
   return {
     project_name: argv.project_name,
     execution_context: path.join(process.cwd(), argv.project_name),
-    with_git: argv.git,
+    with_git: !argv.nogit,
     quiet: argv.quiet,
     verbose: argv.verbose,
     force: argv.force,

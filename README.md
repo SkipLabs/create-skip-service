@@ -12,6 +12,8 @@ npx create-skip-service <project-name> <options>
 
 ## Available Templates
 
+Templates can be found [here](https://github.com/SkipLabs/create-skip-service/tree/main/templates).  
+
 ### with-postgres
 
 A template that includes:
