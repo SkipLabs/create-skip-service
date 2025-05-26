@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "chalk": "^5.4.1",
+    "commander": "^14.0.0",
     "execa": "^9.5.3",
     "prettier": "^3.5.3",
     "yargs": "^17.7.2"

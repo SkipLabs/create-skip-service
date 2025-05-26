@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 // cli.ts
-import yargs from "yargs";
-import { hideBin } from "yargs/helpers";
+import { Command } from "commander";
 import chalk from "chalk";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
@@ -24,87 +23,46 @@ const packageJson = JSON.parse(
   readFileSync(join(__dirname, "..", "package.json"), "utf-8"),
 );
 
-interface Arguments {
-  project_name: string;
-  nogit: boolean;
-  verbose: boolean;
-  quiet: boolean;
-  force: boolean;
-  template: string;
-  _: (string | number)[];
-  $0: string;
-}
-
 const read_cli_arguments = (): Config => {
-  const argv = yargs(hideBin(process.argv))
-    .version(packageJson.version)
-    .command(
-      "$0 <project_name>",
-      "Initialize a new skip service project",
-      (yargs) => {
-        return yargs
-          .positional("project_name", {
-            describe: "Project name",
-            type: "string",
-            demandOption: true,
-          })
-          .option("nogit", {
-            describe: "Do not initialize a git repository",
-            type: "boolean",
-            default: false,
-          })
-          .option("template", {
-            alias: "t",
-            describe: "Template to use",
-            type: "string",
-            default: "default",
-          })
-          .option("verbose", {
-            alias: "v",
-            describe: "Run with verbose logging",
-            type: "boolean",
-            default: false,
-          })
-          .option("quiet", {
-            alias: "q",
-            describe: "Run with quiet logging, overrides verbose",
-            type: "boolean",
-            default: false,
-          })
-          .option("force", {
-            alias: "f",
-            describe: "Force overwrite if directory exists",
-            type: "boolean",
-            default: false,
-          });
-      },
-    )
-    .help()
-    .alias("help", "h")
-    .strict()
-    .parse() as unknown as Arguments;
+  const program = new Command();
 
-  if (argv.project_name === undefined) {
+  program
+    .name("create-skip-service")
+    .description("Initialize a new skip service project")
+    .version(packageJson.version)
+    .argument("<project_name>", "Project name")
+    .option("--no-git-init", "Do not initialize a git repository", true)
+    .option("-t, --template <template>", "Template to use", "default")
+    .option("-v, --verbose", "Run with verbose logging")
+    .option("-q, --quiet", "Run with quiet logging, overrides verbose")
+    .option("-f, --force", "Force overwrite if directory exists");
+
+  program.parse();
+
+  const options = program.opts();
+  const project_name = program.args[0];
+
+  if (!project_name) {
     logger.logError("Project name is required");
     process.exit(1);
   }
 
-  if (argv.quiet) {
+  if (options.quiet) {
     logger.setQuiet(true);
   }
 
-  if (argv.verbose) {
+  if (options.verbose) {
     logger.setVerbose(true);
   }
 
-  return {
-    project_name: argv.project_name,
-    execution_context: path.join(process.cwd(), argv.project_name),
-    with_git: !argv.nogit,
-    quiet: argv.quiet,
-    verbose: argv.verbose,
-    force: argv.force,
-    template: argv.template,
+  return{
+    project_name,
+    execution_context: path.join(process.cwd(), project_name),
+    with_git: options.gitInit,
+    quiet: options.quiet || false,
+    verbose: options.verbose || false,
+    force: options.force || false,
+    template: options.template || "default",
   };
 };
 
