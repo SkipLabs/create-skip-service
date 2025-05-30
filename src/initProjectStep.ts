@@ -5,18 +5,32 @@ import { logger } from "./io.js";
 import { CreateSkipServiceError } from "./errors.js";
 import { existsSync } from "fs";
 
+const makeExecutable = async (scriptPath: string) => {
+  logger.blue(`\tMaking ${scriptPath} executable...`);
+  await execa("chmod", ["+x", scriptPath]);
+  logger.green(`\t${scriptPath} is now executable`);
+};
+
 const initProjectStep = async (config: Config) => {
   try {
+    const setupScriptPath = path.join(
+      config.execution_context,
+      "setup.sh",
+    );
+    if (existsSync(setupScriptPath)) {
+      await makeExecutable(setupScriptPath);
+    } else {
+      logger.gray("\tsetup.sh does not exist");
+    }
+
     const initScriptPath = path.join(
       config.execution_context,
       "init_server.sh",
     );
     if (existsSync(initScriptPath)) {
-      logger.blue("Making init_server.sh executable...");
-      await execa("chmod", ["+x", initScriptPath]);
-      logger.green("init_server.sh is now executable");
+      await makeExecutable(initScriptPath);
     } else {
-      logger.gray("init_server.sh does not exist");
+      logger.gray("\tinit_server.sh does not exist");
     }
   } catch (error) {
     throw new CreateSkipServiceError(
