@@ -35,7 +35,20 @@ Features:
 - RESTful API endpoints
 - Docker configuration
 - TypeScript setup
-- Development utilities
+
+### React + Vite Template (`with_react_vite`)
+
+A Chat application in the browser for a working end-to-end skip integration with React + Vite.
+
+```bash
+npx create-skip-service my-service --template with_react_vite
+```
+
+Features:
+- React + Vite basic Chat app
+- Real-time data streaming
+- Streaming API endpoints
+- Typescript setup
 
 ## Using Templates
 
