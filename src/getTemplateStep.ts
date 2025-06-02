@@ -44,11 +44,15 @@ const downloadDirectory = async (
   const response = await fetchWithHeaders(url);
   if (!response.ok) throw new Error(`Failed to fetch template list ${url}`);
   const contents = (await response.json()) as GitHubContent[];
+  const spinner = ['/', '-', '\\', '|'];
+  let spinnerIndex = 0;
+  
   for (const item of contents) {
     const itemPath = join(localPath, item.name);
     if (item.type === "file") {
       if (config.verbose) {
-        process.stdout.write(".");
+        process.stdout.write('\r\t' + spinner[spinnerIndex]);
+        spinnerIndex = (spinnerIndex + 1) % spinner.length;
       }
       await downloadFile(item.download_url, itemPath);
     } else if (item.type === "dir") {
@@ -59,6 +63,9 @@ const downloadDirectory = async (
         itemPath,
       );
     }
+  }
+  if (config.verbose) {
+    process.stdout.write('\r\t      \r');
   }
 };
 
@@ -94,7 +101,8 @@ const downloadTemplate = async (config: Config, repo: string, path: string) => {
     const templateUrl = `${GITHUB_API}/repos/${repo}/contents/${path}/${template}`;
     process.stdout.write("\t");
     await downloadDirectory(config, templateUrl, config.execution_context);
-    logger.green(`\n\t✓ Template ${template} downloaded successfully`);
+    process.stdout.write('\r\t      \r');
+    logger.green(`\t✓ Template ${template} downloaded successfully`);
   } catch (error) {
     if (error instanceof CreateSkipServiceError) throw error;
     throw new CreateSkipServiceError(
