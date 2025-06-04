@@ -30,7 +30,10 @@
     "start": "node dist/cli.js",
     "dev": "tsc --watch",
     "clean": "rm -rf dist && rm -rf node_modules",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run"
   },
   "author": "SkipLabs",
   "license": "MIT",
@@ -38,8 +41,10 @@
   "devDependencies": {
     "@types/node": "^22.15.19",
     "@types/yargs": "^17.0.33",
+    "@vitest/ui": "^3.2.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.1"
   },
   "dependencies": {
     "chalk": "^5.4.1",

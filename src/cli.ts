@@ -2,7 +2,6 @@
 
 // cli.ts
 import { Command } from "commander";
-import chalk from "chalk";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
@@ -24,13 +23,13 @@ const packageJson = JSON.parse(
   readFileSync(join(__dirname, "..", "package.json"), "utf-8"),
 );
 
-const readCliArguments = (): Config => {
+const createCliParser = () => {
   const program = new Command();
 
   program
     .name("create-skip-service")
     .description("Initialize a new skip service project")
-    .version(packageJson.version)
+    .version("1.0.0")
     .argument("<project_name>", "Project name")
     .option("--no-git-init", "Do not initialize a git repository", true)
     .option("-t, --template <template>", "Template to use")
@@ -39,6 +38,13 @@ const readCliArguments = (): Config => {
     .option("-q, --quiet", "Run with quiet logging, overrides verbose")
     .option("-f, --force", "Force overwrite if directory exists");
 
+  return program;
+};
+
+export { createCliParser };
+
+const readCliArguments = (): Config => {
+  const program = createCliParser();
   program.parse();
 
   const options = program.opts();
@@ -104,14 +110,17 @@ const main = async () => {
   }
 };
 
-main().catch((error) => {
-  if (error instanceof CreateSkipServiceError) {
-    logger.logError("Reverting everything...");
-    process.chdir(path.join(error.executionContext, ".."));
-    rmSync(error.executionContext, { recursive: true, force: true });
-    logger.gray(error.message);
-  } else {
-    logger.logError("Error:", error);
-  }
-  process.exit(1);
-});
+// Only run main when this file is executed directly, not when imported
+if (import.meta.url === `file://${process.argv[1]}`) {
+  main().catch((error) => {
+    if (error instanceof CreateSkipServiceError) {
+      logger.logError("Reverting everything...");
+      process.chdir(path.join(error.executionContext, ".."));
+      rmSync(error.executionContext, { recursive: true, force: true });
+      logger.gray(error.message);
+    } else {
+      logger.logError("Error:", error);
+    }
+    process.exit(1);
+  });
+}
