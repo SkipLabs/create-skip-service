@@ -7,14 +7,17 @@ const getTemplateStep = async (config: Config) => {
   if (!template) {
     return;
   }
-  logger.logTitle(` - Getting template:'${template.name}'`);
+  logger.logTitle(
+    ` - Getting template '${template.name}' from ${template.repo}`,
+  );
   try {
-    logger.blue(` - Getting template: from '${template.path}'`);
     await downloadRepo(template, config.executionContext, config.verbose);
-    logger.green(`\t✓ Template  ${template} downloaded successfully`);
+    logger.green(`\t✓ Template ${template.name} downloaded successfully`);
   } catch (error) {
     if (template.name !== "default") {
-      logger.yellow(`Template not found in main repo...`);
+      logger.yellow(
+        `Template '${template.name} not found in ${template.repo} repo...`,
+      );
     }
     throw error;
   }
