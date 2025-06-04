@@ -73,6 +73,7 @@ The template includes the following API endpoints:
 ### Service Ports
 
 The service runs on the following ports:
+
 - Skip control service: 8081
 - Skip streaming service: 8080
 - REST API: 8082
@@ -80,16 +81,19 @@ The service runs on the following ports:
 ### Example Usage
 
 1. Start the service:
+
 ```bash
 pnpm start
 ```
 
 2. Listen to a user's active friends:
+
 ```bash
 curl -LN http://localhost:8082/active_friends/1
 ```
 
 3. Update user data:
+
 ```bash
 curl http://localhost:8081/v1/inputs/users \
   -X PATCH \

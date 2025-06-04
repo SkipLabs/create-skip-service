@@ -13,20 +13,14 @@ const makeExecutable = async (scriptPath: string) => {
 
 const initProjectStep = async (config: Config) => {
   try {
-    const setupScriptPath = path.join(
-      config.execution_context,
-      "setup.sh",
-    );
+    const setupScriptPath = path.join(config.executionContext, "setup.sh");
     if (existsSync(setupScriptPath)) {
       await makeExecutable(setupScriptPath);
     } else {
       logger.gray("\tsetup.sh does not exist");
     }
 
-    const initScriptPath = path.join(
-      config.execution_context,
-      "init_server.sh",
-    );
+    const initScriptPath = path.join(config.executionContext, "init_server.sh");
     if (existsSync(initScriptPath)) {
       await makeExecutable(initScriptPath);
     } else {
@@ -35,7 +29,7 @@ const initProjectStep = async (config: Config) => {
   } catch (error) {
     throw new CreateSkipServiceError(
       `Failed to make init_server.sh executable: ${(error as Error).message}`,
-      config.execution_context,
+      config.executionContext,
     );
   }
 };

@@ -5,9 +5,9 @@ type Template = {
 };
 
 type Config = {
-  project_name: string;
-  execution_context: string;
-  with_git: boolean;
+  projectName: string;
+  executionContext: string;
+  withGit: boolean;
   verbose: boolean;
   quiet: boolean;
   force: boolean;

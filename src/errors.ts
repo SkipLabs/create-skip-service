@@ -1,9 +1,9 @@
 class CreateSkipServiceError extends Error {
-  execution_context: string;
+  executionContext: string;
 
-  constructor(message: string, execution_context: string) {
+  constructor(message: string, executionContext: string) {
     super(message);
-    this.execution_context = execution_context;
+    this.executionContext = executionContext;
   }
 }
 

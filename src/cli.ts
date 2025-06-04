@@ -23,7 +23,7 @@ const packageJson = JSON.parse(
   readFileSync(join(__dirname, "..", "package.json"), "utf-8"),
 );
 
-const read_cli_arguments = (): Config => {
+const readCliArguments = (): Config => {
   const program = new Command();
 
   program
@@ -40,9 +40,9 @@ const read_cli_arguments = (): Config => {
   program.parse();
 
   const options = program.opts();
-  const project_name = program.args[0];
+  const projectName = program.args[0];
 
-  if (!project_name) {
+  if (!projectName) {
     logger.logError("Project name is required");
     process.exit(1);
   }
@@ -55,10 +55,10 @@ const read_cli_arguments = (): Config => {
     logger.setVerbose(true);
   }
 
-  return{
-    project_name,
-    execution_context: path.join(process.cwd(), project_name),
-    with_git: options.gitInit,
+  return {
+    projectName: projectName,
+    executionContext: path.join(process.cwd(), projectName),
+    withGit: options.gitInit,
     quiet: options.quiet || false,
     verbose: options.verbose || false,
     force: options.force || false,
@@ -78,7 +78,7 @@ const steps = [
 ];
 
 const main = async () => {
-  const config: Config = read_cli_arguments();
+  const config: Config = readCliArguments();
   logger.logTitle("Starting setup...");
   for (const step of steps) {
     await step(config);
@@ -88,8 +88,8 @@ const main = async () => {
 main().catch((error) => {
   if (error instanceof CreateSkipServiceError) {
     logger.logError("Reverting everything...");
-    process.chdir(path.join(error.execution_context, ".."));
-    rmSync(error.execution_context, { recursive: true, force: true });
+    process.chdir(path.join(error.executionContext, ".."));
+    rmSync(error.executionContext, { recursive: true, force: true });
     logger.gray(error.message);
   } else {
     logger.logError("Error:", error);

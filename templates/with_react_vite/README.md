@@ -38,11 +38,13 @@ cd my-service
 In the project directory, you can run:
 
 ### Backend (reactive_service)
+
 - `pnpm build` - Builds the service for production
 - `pnpm start` - Runs the built service
 - `pnpm clean` - Cleans build artifacts and dependencies
 
 ### Frontend (frontend)
+
 - `pnpm dev` - Starts the development server
 - `pnpm build` - Builds the frontend for production
 - `pnpm preview` - Previews the production build
@@ -86,6 +88,7 @@ The template includes the following API endpoints:
 ### Service Ports
 
 The services run on the following ports:
+
 - Skip control service: 8081
 - Skip streaming service: 8080
 - REST API: 8082
@@ -94,11 +97,13 @@ The services run on the following ports:
 ### Running the Application
 
 1. Start the reactive service:
+
 ```bash
 cd reactive_service && pnpm start
 ```
 
 2. In a new terminal, start the frontend:
+
 ```bash
 cd frontend && pnpm dev
 ```

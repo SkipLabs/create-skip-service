@@ -34,7 +34,7 @@
   },
   "author": "SkipLabs",
   "license": "MIT",
-  "packageManager": "pnpm@10.11.0",
+  "packageManager": "pnpm@10.11.1",
   "devDependencies": {
     "@types/node": "^22.15.19",
     "@types/yargs": "^17.0.33",

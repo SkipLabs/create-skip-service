@@ -15,6 +15,7 @@ npx create-skip-service my-service --template default
 ```
 
 Features:
+
 - Reactive data system setup
 - Real-time data streaming
 - Basic social network simulation
@@ -30,6 +31,7 @@ npx create-skip-service my-service --template with_postgres
 ```
 
 Features:
+
 - PostgreSQL database integration
 - Real-time data streaming
 - RESTful API endpoints
@@ -45,6 +47,7 @@ npx create-skip-service my-service --template with_react_vite
 ```
 
 Features:
+
 - React + Vite basic Chat app
 - Real-time data streaming
 - Streaming API endpoints
@@ -62,6 +65,7 @@ Features:
 ## Template Structure
 
 Each template includes:
+
 - Complete project setup
 - TypeScript configuration
 - Development scripts
@@ -71,6 +75,7 @@ Each template includes:
 ## Contributing
 
 We welcome new templates! To contribute:
+
 1. Create a new directory in `templates/`
 2. Include all necessary files
 3. Add a comprehensive README.md

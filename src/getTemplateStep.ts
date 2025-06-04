@@ -10,7 +10,7 @@ interface GitHubContent {
   name: string;
   type: string;
   path: string;
-  download_url: string;
+  downloadUrl: string;
 }
 
 const fetchWithHeaders = async (url: string) => {
@@ -41,17 +41,17 @@ const downloadDirectory = async (
   const response = await fetchWithHeaders(url);
   if (!response.ok) throw new Error(`Failed to fetch template list ${url}`);
   const contents = (await response.json()) as GitHubContent[];
-  const spinner = ['/', '-', '\\', '|'];
+  const spinner = ["/", "-", "\\", "|"];
   let spinnerIndex = 0;
-  
+
   for (const item of contents) {
     const itemPath = join(localPath, item.name);
     if (item.type === "file") {
       if (config.verbose) {
-        process.stdout.write('\r\t' + spinner[spinnerIndex]);
+        process.stdout.write("\r\t" + spinner[spinnerIndex]);
         spinnerIndex = (spinnerIndex + 1) % spinner.length;
       }
-      await downloadFile(item.download_url, itemPath);
+      await downloadFile(item.downloadUrl, itemPath);
     } else if (item.type === "dir") {
       mkdirSync(itemPath, { recursive: true });
       await downloadDirectory(
@@ -62,7 +62,7 @@ const downloadDirectory = async (
     }
   }
   if (config.verbose) {
-    process.stdout.write('\r\t      \r');
+    process.stdout.write("\r\t      \r");
   }
 };
 
@@ -91,20 +91,20 @@ const downloadTemplate = async (config: Config) => {
       availableTemplates.forEach((t: string) => logger.logError(`\t- ${t}`));
       throw new CreateSkipServiceError(
         "Invalid template",
-        config.execution_context,
+        config.executionContext,
       );
     }
 
     const templateUrl = `${url}/${template.name}`;
     process.stdout.write("\t");
-    await downloadDirectory(config, templateUrl, config.execution_context);
-    process.stdout.write('\r\t      \r');
+    await downloadDirectory(config, templateUrl, config.executionContext);
+    process.stdout.write("\r\t      \r");
     logger.green(`\t✓ Template ${template} downloaded successfully`);
   } catch (error) {
     if (error instanceof CreateSkipServiceError) throw error;
     throw new CreateSkipServiceError(
       (error as Error).message,
-      config.execution_context,
+      config.executionContext,
     );
   }
 };
@@ -116,9 +116,7 @@ const getTemplateStep = async (config: Config) => {
     await downloadTemplate(config);
   } catch (error) {
     if (template.name !== "default") {
-      logger.yellow(
-        `Template not found in main repo...`,
-      );
+      logger.yellow(`Template not found in main repo...`);
       throw error;
     } else {
       throw error;

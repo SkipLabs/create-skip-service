@@ -1,13 +1,10 @@
-import chalk from "chalk";
 import { execa } from "execa";
 import { Config } from "./types.js";
-import path from "path";
-import fs from "fs";
 import { logger } from "./io.js";
 
 const gitStep = async (config: Config) => {
   logger.logTitle(" - Initializing git repository");
-  if (config.with_git) {
+  if (config.withGit) {
     await execa("git", ["init"]);
     logger.green("\t✓ initialized");
 
