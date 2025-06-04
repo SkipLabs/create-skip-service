@@ -1,13 +1,10 @@
-import { join } from "path";
+import path, { join } from "path";
 import { Config } from "./types.js";
 import { logger } from "./io.js";
 import { writeFileSync, mkdirSync } from "fs";
 import { CreateSkipServiceError } from "./errors.js";
 
-const TEMPLATE_REPO_DEFAULT = "SkipLabs/create-skip-service";
-const TEMPLATE_PATH_DEFAULT = "templates";
 const GITHUB_API = "https://api.github.com";
-
 
 interface GitHubContent {
   name: string;
@@ -59,7 +56,7 @@ const downloadDirectory = async (
       mkdirSync(itemPath, { recursive: true });
       await downloadDirectory(
         config,
-        `${GITHUB_API}/repos/${TEMPLATE_REPO_DEFAULT}/contents/${item.path}`,
+        `${GITHUB_API}/repos/${config.template.repo}/contents/${item.path}`,
         itemPath,
       );
     }
@@ -69,12 +66,12 @@ const downloadDirectory = async (
   }
 };
 
-const downloadTemplate = async (config: Config, repo: string, path: string) => {
+const downloadTemplate = async (config: Config) => {
   try {
     logger.blue(` - Getting template: from '${path}'`);
     const template = config.template;
 
-    const url = `${GITHUB_API}/repos/${repo}/contents/${path}`;
+    const url = `${GITHUB_API}/repos/${template.repo}/contents/${template.path}`;
     logger.gray(`\t- Fetching template list`);
 
     const response = await fetchWithHeaders(url);
@@ -88,8 +85,8 @@ const downloadTemplate = async (config: Config, repo: string, path: string) => {
       .filter((item) => item.type === "dir")
       .map((item) => item.name);
 
-    if (!availableTemplates.includes(template)) {
-      logger.logError(`  Invalid template: ${template}`);
+    if (!availableTemplates.includes(template.name)) {
+      logger.logError(`  Invalid template: ${template.name}`);
       logger.logError("  Available templates:");
       availableTemplates.forEach((t: string) => logger.logError(`\t- ${t}`));
       throw new CreateSkipServiceError(
@@ -98,7 +95,7 @@ const downloadTemplate = async (config: Config, repo: string, path: string) => {
       );
     }
 
-    const templateUrl = `${GITHUB_API}/repos/${repo}/contents/${path}/${template}`;
+    const templateUrl = `${url}/${template.name}`;
     process.stdout.write("\t");
     await downloadDirectory(config, templateUrl, config.execution_context);
     process.stdout.write('\r\t      \r');
@@ -116,9 +113,9 @@ const getTemplateStep = async (config: Config) => {
   const template = config.template;
   logger.logTitle(` - Getting template:'${template}'`);
   try {
-    await downloadTemplate(config, TEMPLATE_REPO_DEFAULT, TEMPLATE_PATH_DEFAULT);
+    await downloadTemplate(config);
   } catch (error) {
-    if (template !== "default") {
+    if (template.name !== "default") {
       logger.yellow(
         `Template not found in main repo...`,
       );

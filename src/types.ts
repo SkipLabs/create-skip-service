@@ -1,3 +1,9 @@
+type Template = {
+  repo: string;
+  path: string;
+  name: string;
+};
+
 type Config = {
   project_name: string;
   execution_context: string;
@@ -5,7 +11,7 @@ type Config = {
   verbose: boolean;
   quiet: boolean;
   force: boolean;
-  template: string;
+  template: Template;
 };
 
 export { Config };

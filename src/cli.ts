@@ -62,7 +62,11 @@ const read_cli_arguments = (): Config => {
     quiet: options.quiet || false,
     verbose: options.verbose || false,
     force: options.force || false,
-    template: options.template || "default",
+    template: {
+      repo: "SkipLabs/create-skip-service",
+      path: "templates",
+      name: options.template || "default",
+    },
   };
 };
 
