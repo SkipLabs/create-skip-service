@@ -1,4 +1,4 @@
-type Template = {
+type GitRepo = {
   repo: string;
   path: string;
   name: string;
@@ -11,7 +11,8 @@ type Config = {
   verbose: boolean;
   quiet: boolean;
   force: boolean;
-  template: Template;
+  example: GitRepo | null;
+  template: GitRepo | null;
 };
 
-export { Config };
+export { Config, GitRepo };

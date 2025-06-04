@@ -16,6 +16,7 @@ import { logger } from "./io.js";
 import { getTemplateStep } from "./getTemplateStep.js";
 import { CreateSkipServiceError } from "./errors.js";
 import { initProjectStep } from "./initProjectStep.js";
+import { getExampleStep } from "./getExampleStep.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -32,7 +33,8 @@ const readCliArguments = (): Config => {
     .version(packageJson.version)
     .argument("<project_name>", "Project name")
     .option("--no-git-init", "Do not initialize a git repository", true)
-    .option("-t, --template <template>", "Template to use", "default")
+    .option("-t, --template <template>", "Template to use")
+    .option("-e, --example <example>", "Example to use")
     .option("-v, --verbose", "Run with verbose logging")
     .option("-q, --quiet", "Run with quiet logging, overrides verbose")
     .option("-f, --force", "Force overwrite if directory exists");
@@ -42,8 +44,15 @@ const readCliArguments = (): Config => {
   const options = program.opts();
   const projectName = program.args[0];
 
+  console.log(options);
+
   if (!projectName) {
     logger.logError("Project name is required");
+    process.exit(1);
+  }
+
+  if (options.example && options.template) {
+    logger.logError("Example and template cannot be used together");
     process.exit(1);
   }
 
@@ -62,17 +71,27 @@ const readCliArguments = (): Config => {
     quiet: options.quiet || false,
     verbose: options.verbose || false,
     force: options.force || false,
-    template: {
-      repo: "SkipLabs/create-skip-service",
-      path: "templates",
-      name: options.template || "default",
-    },
+    example: options.example
+      ? {
+          name: options.example || "blogger",
+          repo: "SkipLabs/skip",
+          path: "examples",
+        }
+      : null,
+    template: !options.example
+      ? {
+          repo: "SkipLabs/create-skip-service",
+          path: "templates",
+          name: options.template || "default",
+        }
+      : null,
   };
 };
 
 const steps = [
   createDirectoryAndEnterStep,
   getTemplateStep,
+  getExampleStep,
   initProjectStep,
   gitStep,
 ];
