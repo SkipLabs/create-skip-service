@@ -9,7 +9,15 @@ const gitStep = async (config: Config) => {
     logger.green("\t✓ initialized");
 
     await execa("git", ["add", "."]);
-    await execa("git", ["commit", "-m", "Initial commit"]);
+
+    const commitMsg =
+      "Initial setup by `create-skip-service`\n\n" +
+      (config.example
+        ? `Cloned '${config.example.name}' example from github.com/${config.example.repo}`
+        : `Cloned '${config.template!.name}' template from github.com/${config.template!.repo}`);
+
+    await execa("git", ["commit", "-m", commitMsg]);
+
     logger.green("\t✓ initial commit created");
   } else {
     logger.gray("\t- Skipping git initialization");
