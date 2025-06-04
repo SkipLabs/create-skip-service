@@ -7,14 +7,15 @@ const getExampleStep = async (config: Config) => {
   if (!example) {
     return;
   }
-  logger.logTitle(` - Getting example:'${example.name}'`);
+  logger.logTitle(` - Getting example '${example.name}' from ${example.repo}`);
   try {
-    logger.blue(` - Getting example: from '${example.path}'`);
     await downloadRepo(example, config.executionContext, config.verbose);
-    logger.green(`\t✓ Example  ${example} downloaded successfully`);
+    logger.green(`\t✓ Example ${example.name} downloaded successfully`);
   } catch (error) {
     if (example.name !== "default") {
-      logger.yellow(`Example not found in main repo...`);
+      logger.yellow(
+        `Example ${example.name} not found in ${example.repo} repo...`,
+      );
     }
     throw error;
   }

@@ -73,9 +73,9 @@ const readCliArguments = (): Config => {
     force: options.force || false,
     example: options.example
       ? {
-          name: options.example || "blogger",
           repo: "SkipLabs/skip",
           path: "examples",
+          name: options.example || "blogger",
         }
       : null,
     template: !options.example
