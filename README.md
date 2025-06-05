@@ -10,7 +10,6 @@ A CLI tool to bootstrap Skip services with various templates. It provides a quic
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg)](https://pnpm.io/)
 [![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 
-
 ## Usage
 
 To create a new Skip service, run:
