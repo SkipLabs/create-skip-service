@@ -13,14 +13,8 @@ class Logger {
     this.level = enabled ? "quiet" : "normal";
   }
 
-  private normalLog(): boolean {
-    if (process.env.SKIP_QUIET) return false;
-    if (process.env.SKIP_VERBOSE) return true;
-    return this.level === "verbose";
-  }
-
   private log(color: (text: string) => string, message: string): void {
-    if (this.normalLog()) {
+    if (this.level === "verbose") {
       console.log(color(message));
     }
   }
