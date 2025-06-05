@@ -3,7 +3,6 @@ import path from "path";
 import { createCliParser } from "../cli.js";
 import { Config } from "../types.js";
 
-
 const parseCliArgs = (args: string[]) => {
   const program = createCliParser();
 
@@ -87,9 +86,9 @@ describe("CLI Argument Parsing", () => {
       expect(config.withGit).toBe(true);
       expect(config.example).toBeNull();
       expect(config.template).toEqual({
-        "name": "default",
-        "path": "templates",
-        "repo": "SkipLabs/create-skip-service",
+        name: "default",
+        path: "templates",
+        repo: "SkipLabs/create-skip-service",
       });
     });
 
