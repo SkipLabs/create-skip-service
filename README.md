@@ -1,15 +1,15 @@
 # create-skip-service
 
-[![CI](https://github.com/SkipLabs/create-skip-service/actions/workflows/ci.yml/badge.svg)](https://github.com/SkipLabs/create-skip-service/actions/workflows/ci.yml)
-[![npm version](https://badge.fury.io/js/create-skip-service.svg)](https://badge.fury.io/js/create-skip-service)
-[![npm downloads](https://img.shields.io/npm/dm/create-skip-service.svg)](https://www.npmjs.com/package/create-skip-service)
-[![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg)](https://pnpm.io/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-
 A CLI tool to bootstrap Skip services with various templates. It provides a quick way to start new Skip projects with pre-configured templates for different use cases.
+
+## Current status
+
+[![CI](https://github.com/SkipLabs/create-skip-service/actions/workflows/ci.yml/badge.svg)](https://github.com/SkipLabs/create-skip-service/actions/workflows/ci.yml)
+[![npm downloads](https://img.shields.io/npm/dm/create-skip-service.svg)](https://www.npmjs.com/package/create-skip-service)
+
+[![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg)](https://pnpm.io/)
+[![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+
 
 ## Usage
 
