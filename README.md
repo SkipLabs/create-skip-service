@@ -15,21 +15,47 @@ A CLI tool to bootstrap Skip services with various templates. It provides a quic
 To create a new Skip service, run:
 
 ```bash
-npx create-skip-service <project-name> <options>
+npx create-skip-service <project-name> [options]
 ```
+
+### Options
+
+- `--template <name>` - Use a specific template (default, with_postgres, with_react_vite)
+- `--example <name>` - Use an example from the Skip repository
+- `--no-git` - Skip git repository initialization
+- `--force` - Overwrite existing directory
+- `--verbose` - Show detailed output
+- `--quiet` - Suppress non-error output
 
 ## Available Templates
 
 Templates can be found [here](https://github.com/SkipLabs/create-skip-service/tree/main/templates).
 
-### with-postgres
+### default
+
+A basic reactive Skip service template that includes:
+
+- Core Skip service structure
+- TypeScript configuration
+- Development tools setup
+
+### with_postgres
 
 A template that includes:
 
 - PostgreSQL database integration
-- Basic service structure
+- Database models and schema
 - TypeScript configuration
 - Development tools setup
+
+### with_react_vite
+
+A full-stack chat application template that includes:
+
+- React frontend with Vite
+- Skip reactive service backend
+- Real-time chat functionality
+- TypeScript configuration throughout
 
 ## Development
 
@@ -56,6 +82,58 @@ To work on this tool locally:
 - `pnpm dev` - Run in development mode with watch
 - `pnpm clean` - Clean build artifacts
 - `pnpm format` - Format code with Prettier
+- `pnpm test` - Run tests in watch mode
+- `pnpm test:run` - Run tests once
+- `pnpm test:ui` - Run tests with UI
+- `pnpm test:coverage` - Run tests with coverage report
+- `pnpm typecheck` - Type checking without emitting
+
+### Testing the CLI locally
+
+```bash
+node dist/cli.js <project-name> [options]
+```
+
+## Available Examples
+
+You can also bootstrap your project using examples from the Skip repository by using the `--example` flag:
+
+```bash
+npx create-skip-service my-project --example <example-name>
+```
+
+### blogger
+
+A full-stack blogging platform demonstrating:
+
+- Skip reactive service with leader-follower distributed configuration
+- Flask web service for REST API
+- Vue.js frontend
+- PostgreSQL database
+- HAProxy reverse proxy
+- Docker Compose and distributed deployment options
+
+### chatroom
+
+A real-time chat application featuring:
+
+- Skip reactive service with Kafka event store
+- Express.js web service
+- React frontend with real-time messaging
+- Docker Compose configuration
+- Event-driven architecture demonstration
+
+### hackernews
+
+A HackerNews clone showcasing:
+
+- Skip reactive service with distributed leader-follower setup
+- Flask web service with read/write separation
+- React frontend with real-time updates
+- PostgreSQL database
+- HAProxy load balancing
+- Both Docker Compose and Kubernetes deployment options
+- Comprehensive real-time voting and posting system
 
 ## Support
 
