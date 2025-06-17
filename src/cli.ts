@@ -29,7 +29,7 @@ const createCliParser = () => {
   program
     .name("create-skip-service")
     .description("Initialize a new skip service project")
-    .version("1.0.0")
+    .version(packageJson.version)
     .argument("<project_name>", "Project name")
     .option("--no-git-init", "Do not initialize a git repository", true)
     .option("-t, --template <template>", "Template to use")
