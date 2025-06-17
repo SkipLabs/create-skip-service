@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import path from "path";
-import { createCliParser } from "../cli.js";
+import { createCliParser } from "../cliParser.js";
 import { Config } from "../types.js";
 
 const parseCliArgs = (args: string[]) => {
