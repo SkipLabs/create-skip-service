@@ -1,6 +1,6 @@
 {
   "name": "create-skip-service",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "CLI tool to create and initialize Skip services with customizable templates",
   "bin": {
     "create-skip-service": "./dist/cli.js"
