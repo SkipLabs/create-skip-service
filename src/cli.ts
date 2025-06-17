@@ -111,7 +111,10 @@ const main = async () => {
 };
 
 // Only run main when this file is executed directly, not when imported
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (
+  import.meta.url === `file://${process.argv[1]}` ||
+  import.meta.url.endsWith(process.argv[1])
+) {
   main().catch((error) => {
     if (error instanceof CreateSkipServiceError) {
       logger.logError("Reverting everything...");
