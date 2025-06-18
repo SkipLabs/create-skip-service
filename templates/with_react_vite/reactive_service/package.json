@@ -32,6 +32,9 @@
   "type": "module",
   "dependencies": {
     "@skiplabs/skip": "^0.0.16",
+    "@skipruntime/core": "^0.0.16",
+    "@skipruntime/helpers": "^0.0.16",
+    "@skipruntime/server": "^0.0.16",
     "@types/cors": "^2.8.18",
     "cors": "^2.8.5",
     "express": "^5.1.0"
