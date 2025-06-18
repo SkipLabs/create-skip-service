@@ -6,7 +6,7 @@ This template provides a starting point for building reactive Skip services. It 
 
 - Skip service setup with reactive data system
 - Real-time data streaming capabilities
-- RESTful API endpoints for social network simulation
+- Fastify-based RESTful API endpoints for social network simulation
 - TypeScript configuration
 - Development scripts and utilities
 
@@ -28,7 +28,7 @@ pnpm start
 - **Real-time Streaming**: Built-in support for Skip's reactive data system
 - **Reactive Programming**: Automatic data dependency tracking and updates
 - **TypeScript Support**: Full TypeScript setup with proper configuration
-- **API Endpoints**: Pre-configured REST endpoints for social network simulation
+- **Fastify API**: High-performance REST endpoints for social network simulation
 - **Development Tools**: Includes formatting, building, and cleaning scripts
 
 ## Available Scripts
@@ -46,7 +46,7 @@ In the project directory, you can run:
 src/
 ├── activefriends.mts   # Mappers & resources to track active friends
 ├── data.mts            # Initial user and group data
-├── index.ts            # Express server exposing API
+├── index.ts            # Fastify server exposing API
 ├── skipservice.mts     # Skip service and reactive graph
 └── types.mts           # Type definitions and Skip interfaces
 ```
