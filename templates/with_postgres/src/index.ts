@@ -1,4 +1,4 @@
-import express from 'express';
+import Fastify, { FastifyRequest, FastifyReply } from 'fastify';
 import {
   createPost,
   deletePost,
@@ -12,102 +12,115 @@ import { APIError } from './errors.js';
 import { PostCreate } from './db/models.js';
 import { server, serviceBroker } from './skipservice.js';
 
-const app = express();
+const app = Fastify({ logger: true });
 const port = 3000;
 const SKIP_READ_URL = process.env.SKIP_READ_URL || 'http://localhost:8080';
 
-const asyncHandler =
-  (fn: (req: express.Request, res: express.Response, next: express.NextFunction) => Promise<any>) =>
-  (req: express.Request, res: express.Response, next: express.NextFunction) => {
-    Promise.resolve(fn(req, res, next)).catch(next);
-  };
+// Plugins will be registered in the start function
 
-app.get(
-  '/users',
-  asyncHandler(async (req, res) => {
-    const users = await getUsers();
-    res.json(users);
-  })
-);
+interface GetUserParams {
+  id: string;
+}
 
-app.get(
+interface GetPostParams {
+  id: string;
+}
+
+interface GetStreamPostsParams {
+  uid: string;
+}
+
+interface PostCreateBody {
+  title: string;
+  content: string;
+  author_id: number;
+  status: string;
+}
+
+interface UpdatePostParams {
+  id: string;
+}
+
+app.get('/users', async (request: FastifyRequest, reply: FastifyReply) => {
+  const users = await getUsers();
+  return users;
+});
+
+app.get<{ Params: GetUserParams }>(
   '/users/:id',
-  asyncHandler(async (req, res) => {
-    const { id } = req.params;
+  async (request: FastifyRequest<{ Params: GetUserParams }>, reply: FastifyReply) => {
+    const { id } = request.params;
     const user = await getUserById(id);
-    res.json(user);
-  })
+    return user;
+  }
 );
 
-app.get(
+app.get<{ Params: GetPostParams }>(
   '/posts/:id',
-  asyncHandler(async (req, res) => {
-    const { id } = req.params;
+  async (request: FastifyRequest<{ Params: GetPostParams }>, reply: FastifyReply) => {
+    const { id } = request.params;
     const post = await getPostById(id);
-    res.json(post);
-  })
+    return post;
+  }
 );
 
-app.post(
+app.post<{ Body: PostCreateBody }>(
   '/posts',
-  asyncHandler(async (req, res) => {
-    const { title, content, author_id, status }: PostCreate = req.body;
+  async (request: FastifyRequest<{ Body: PostCreateBody }>, reply: FastifyReply) => {
+    const { title, content, author_id, status } = request.body;
     const post = await createPost({
       title,
       content,
       author_id,
       status,
     });
-    res.json(post);
-  })
+    return post;
+  }
 );
 
-app.get(
+app.get<{ Params: GetStreamPostsParams }>(
   '/streams/posts/:uid',
-  asyncHandler(async (req, res) => {
-    const uid = Number(req.params.uid);
+  async (request: FastifyRequest<{ Params: GetStreamPostsParams }>, reply: FastifyReply) => {
+    const uid = Number(request.params.uid);
     const uuid = await serviceBroker.getStreamUUID('posts', uid);
-    res.redirect(301, `${SKIP_READ_URL}/v1/streams/${uuid}`);
-  })
+    return reply.redirect(`${SKIP_READ_URL}/v1/streams/${uuid}`, 301);
+  }
 );
 
-app.get(
-  '/streams/posts',
-  asyncHandler(async (req, res) => {
-    const uuid = await serviceBroker.getStreamUUID('posts');
-    res.redirect(301, `${SKIP_READ_URL}/v1/streams/${uuid}`);
-  })
-);
+app.get('/streams/posts', async (request: FastifyRequest, reply: FastifyReply) => {
+  const uuid = await serviceBroker.getStreamUUID('posts');
+  return reply.redirect(`${SKIP_READ_URL}/v1/streams/${uuid}`, 301);
+});
 
-app.patch(
+app.patch<{ Params: UpdatePostParams }>(
   '/posts/:id/publish',
-  asyncHandler(async (req, res) => {
-    const { id } = req.params;
+  async (request: FastifyRequest<{ Params: UpdatePostParams }>, reply: FastifyReply) => {
+    const { id } = request.params;
     const post = await publishPost(id);
-    res.json(post);
-  })
+    return post;
+  }
 );
 
-app.patch(
+app.patch<{ Params: UpdatePostParams }>(
   '/posts/:id/unpublish',
-  asyncHandler(async (req, res) => {
-    const { id } = req.params;
+  async (request: FastifyRequest<{ Params: UpdatePostParams }>, reply: FastifyReply) => {
+    const { id } = request.params;
     const post = await unpublishPost(id);
-    res.json(post);
-  })
+    return post;
+  }
 );
 
-app.delete(
+app.delete<{ Params: UpdatePostParams }>(
   '/posts/:id',
-  asyncHandler(async (req, res) => {
-    const { id } = req.params;
+  async (request: FastifyRequest<{ Params: UpdatePostParams }>, reply: FastifyReply) => {
+    const { id } = request.params;
     await deletePost(id);
-    res.status(204).send();
-  })
+    return reply.status(204).send();
+  }
 );
 
-app.use((req, res) => {
-  res.status(404).type('text').send(`
+app.setNotFoundHandler(async (request: FastifyRequest, reply: FastifyReply) => {
+  return reply.status(404).type('text/plain').send(`
 === 404 Not Found ===
 The thing you asked for isn't here.
 ¯\\_(ツ)_/¯
@@ -115,15 +128,15 @@ The thing you asked for isn't here.
 `);
 });
 
-app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  if (err instanceof APIError) {
-    res.status(err.statusCode).json({
-      error: err.name,
-      statusCode: err.statusCode,
-      details: err.message,
+app.setErrorHandler(async (error: Error, request: FastifyRequest, reply: FastifyReply) => {
+  if (error instanceof APIError) {
+    return reply.status(error.statusCode).send({
+      error: error.name,
+      statusCode: error.statusCode,
+      details: error.message,
     });
   } else {
-    res.status(500).json({
+    return reply.status(500).send({
       error: 'InternalError',
       statusCode: 500,
       details: 'An unexpected error occurred',
@@ -131,9 +144,22 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
   }
 });
 
-const webServer = app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+const start = async () => {
+  try {
+    // Register plugins
+    await app.register(import('@fastify/cors'), {
+      origin: true,
+    });
+
+    await app.listen({ port, host: '0.0.0.0' });
+    console.log(`Server running at http://localhost:${port}`);
+  } catch (err) {
+    app.log.error(err);
+    process.exit(1);
+  }
+};
+
+start();
 
 // Graceful shutdown handler for:
 // - SIGINT: Ctrl+C in terminal
@@ -141,8 +167,7 @@ const webServer = app.listen(port, () => {
 ['SIGTERM', 'SIGINT'].forEach((sig) =>
   process.on(sig, async () => {
     await server.close();
-    webServer.close(() => {
-      console.log('\nServers shut down.');
-    });
+    await app.close();
+    console.log('\nServers shut down.');
   })
 );
