@@ -12,7 +12,10 @@ const getExampleStep = async (config: Config) => {
     await downloadRepo(example, config.executionContext, config.verbose);
     logger.green(`\t✓ Example ${example.name} downloaded successfully`);
   } catch (error) {
-    if (example.name !== "default") {
+    if (
+      example.name !== "default" &&
+      !(error as Error).message.includes("GitHub API rate limit exceeded")
+    ) {
       logger.yellow(
         `Example ${example.name} not found in ${example.repo} repo...`,
       );

@@ -14,7 +14,10 @@ const getTemplateStep = async (config: Config) => {
     await downloadRepo(template, config.executionContext, config.verbose);
     logger.green(`\t✓ Template ${template.name} downloaded successfully`);
   } catch (error) {
-    if (template.name !== "default") {
+    if (
+      template.name !== "default" &&
+      !(error as Error).message.includes("GitHub API rate limit exceeded")
+    ) {
       logger.yellow(
         `Template '${template.name} not found in ${template.repo} repo...`,
       );
