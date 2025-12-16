@@ -17,26 +17,26 @@
   "license": "ISC",
   "packageManager": "pnpm@10.10.0",
   "devDependencies": {
-    "@types/express": "^5.0.2",
-    "@types/node": "^22.15.21",
-    "@typescript-eslint/eslint-plugin": "^8.32.1",
-    "@typescript-eslint/parser": "^8.32.1",
-    "eslint": "^9.27.0",
-    "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-prettier": "^5.4.0",
-    "nodemon": "^3.1.10",
-    "prettier": "^3.5.3",
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.19.3",
+    "@typescript-eslint/eslint-plugin": "^8.50.0",
+    "@typescript-eslint/parser": "^8.50.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "nodemon": "^3.1.11",
+    "prettier": "^3.7.4",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.3"
   },
   "type": "module",
   "dependencies": {
-    "@skiplabs/skip": "^0.0.16",
-    "@skipruntime/core": "^0.0.16",
-    "@skipruntime/helpers": "^0.0.16",
-    "@skipruntime/server": "^0.0.16",
-    "@types/cors": "^2.8.18",
+    "@skiplabs/skip": "^0.0.19",
+    "@skipruntime/core": "^0.0.19",
+    "@skipruntime/helpers": "^0.0.19",
+    "@skipruntime/server": "^0.0.19",
+    "@types/cors": "^2.8.19",
     "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^5.2.1"
   }
 }

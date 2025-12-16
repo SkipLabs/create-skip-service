@@ -15,23 +15,23 @@
   "license": "ISC",
   "packageManager": "pnpm@10.10.0",
   "devDependencies": {
-    "@skipruntime/core": "^0.0.16",
-    "@skipruntime/helpers": "^0.0.16",
-    "@skipruntime/server": "^0.0.16",
-    "@types/node": "^22.15.20",
-    "@types/pg": "^8.15.2",
-    "@typescript-eslint/eslint-plugin": "^8.32.1",
-    "@typescript-eslint/parser": "^8.32.1",
-    "nodemon": "^3.1.10",
-    "prettier": "^3.5.3",
+    "@skipruntime/core": "^0.0.19",
+    "@skipruntime/helpers": "^0.0.19",
+    "@skipruntime/server": "^0.0.19",
+    "@types/node": "^22.19.3",
+    "@types/pg": "^8.16.0",
+    "@typescript-eslint/eslint-plugin": "^8.50.0",
+    "@typescript-eslint/parser": "^8.50.0",
+    "nodemon": "^3.1.11",
+    "prettier": "^3.7.4",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.3"
   },
   "type": "module",
   "dependencies": {
-    "@fastify/cors": "^11.0.1",
-    "@skip-adapter/postgres": "^0.0.16",
-    "fastify": "^5.4.0",
-    "pg": "^8.16.0"
+    "@fastify/cors": "^11.2.0",
+    "@skip-adapter/postgres": "^0.0.19",
+    "fastify": "^5.6.2",
+    "pg": "^8.16.3"
   }
 }
