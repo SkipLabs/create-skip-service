@@ -5,6 +5,11 @@ import { logger } from "./io.js";
 import { CreateSkipServiceError } from "./errors.js";
 import { existsSync } from "fs";
 
+const getErrorMessage = (error: unknown): string => {
+  if (error instanceof Error) return error.message;
+  return String(error);
+};
+
 const makeExecutable = async (scriptPath: string) => {
   logger.blue(`\tMaking ${scriptPath} executable...`);
   await execa("chmod", ["+x", scriptPath]);
@@ -28,7 +33,7 @@ const initProjectStep = async (config: Config) => {
     }
   } catch (error) {
     throw new CreateSkipServiceError(
-      `Failed to make init_server.sh executable: ${(error as Error).message}`,
+      `Failed to make init_server.sh executable: ${getErrorMessage(error)}`,
       config.executionContext,
     );
   }

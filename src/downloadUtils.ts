@@ -5,6 +5,11 @@ import { CreateSkipServiceError } from "./errors.js";
 import { logger } from "./io.js";
 const GITHUB_API = "https://api.github.com";
 
+const getErrorMessage = (error: unknown): string => {
+  if (error instanceof Error) return error.message;
+  return String(error);
+};
+
 interface GitHubContent {
   name: string;
   type: "file" | "dir";
@@ -104,10 +109,7 @@ const downloadRepo = async (
     process.stdout.write("\r\t      \r");
   } catch (error) {
     if (error instanceof CreateSkipServiceError) throw error;
-    throw new CreateSkipServiceError(
-      (error as Error).message,
-      executionContext,
-    );
+    throw new CreateSkipServiceError(getErrorMessage(error), executionContext);
   }
 };
 

@@ -21,8 +21,6 @@ const readCliArguments = (): Config => {
   const options = program.opts();
   const projectName = program.args[0];
 
-  console.log(options);
-
   if (!projectName) {
     logger.logError("Project name is required");
     process.exit(1);

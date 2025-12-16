@@ -376,7 +376,7 @@ describe("gitStep", () => {
       ]);
     });
 
-    it("should handle missing template when withGit is true (fallback scenario)", async () => {
+    it("should handle missing template and example with fallback message", async () => {
       const configWithoutTemplate = {
         ...baseConfig,
         withGit: true,
@@ -387,9 +387,13 @@ describe("gitStep", () => {
 
       vi.mocked(execa).mockResolvedValue({} as any);
 
-      // This should handle the case where template! is used in the original code
-      // The original code assumes template exists if example doesn't
-      await expect(gitStep(configWithoutTemplate)).rejects.toThrow();
+      await gitStep(configWithoutTemplate);
+
+      expect(execa).toHaveBeenCalledWith("git", [
+        "commit",
+        "-m",
+        "Initial setup by `create-skip-service`\n\nUnknown source",
+      ]);
     });
   });
 });

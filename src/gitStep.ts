@@ -10,11 +10,14 @@ const gitStep = async (config: Config) => {
 
     await execa("git", ["add", "."]);
 
-    const commitMsg =
-      "Initial setup by `create-skip-service`\n\n" +
-      (config.example
-        ? `Cloned '${config.example.name}' example from github.com/${config.example.repo}`
-        : `Cloned '${config.template!.name}' template from github.com/${config.template!.repo}`);
+    let repoInfo = "Unknown source";
+    if (config.example) {
+      repoInfo = `Cloned '${config.example.name}' example from github.com/${config.example.repo}`;
+    } else if (config.template) {
+      repoInfo = `Cloned '${config.template.name}' template from github.com/${config.template.repo}`;
+    }
+
+    const commitMsg = `Initial setup by \`create-skip-service\`\n\n${repoInfo}`;
 
     await execa("git", ["commit", "-m", commitMsg]);
 
