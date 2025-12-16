@@ -54,7 +54,8 @@ pnpm vitest run src/__tests__/cli.test.ts
 - **io.ts**: Multi-level logging system (verbose, normal, quiet) with colored output using chalk
 - **promptUtils.ts**: Interactive user prompts for confirmations and directory overwrite handling
 - **types.ts**: Core data structures including Config and GitRepo interfaces
-- **steps/**: Individual step implementations in the pipeline pattern
+- **errors.ts**: Custom error class (`CreateSkipServiceError`) that carries execution context for cleanup
+- Individual step files: `createDirectoryAndEnterStep.ts`, `getTemplateStep.ts`, `getExampleStep.ts`, `initProjectStep.ts`, `gitStep.ts`
 
 ### Key Features
 
@@ -95,6 +96,6 @@ The `Config` type defines the execution context with project name, paths, git se
 - Error recovery includes automatic cleanup of partially created projects
 - Husky is configured for pre-commit hooks (lint-staged + test:run) and pre-push hooks (test:run + typecheck)
 - Test framework: Vitest with Node.js environment
-- Comprehensive test suite: 154 tests across 9 test files with 100% pass rate covering all CLI modules
+- Comprehensive test suite covering all CLI modules in `src/__tests__/` directory
 - TypeScript with strict configuration and ES2022 target
 - Dependencies: Commander.js (CLI), Chalk (colors), Execa (process execution)
