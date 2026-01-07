@@ -9,9 +9,7 @@ jobs:
 
       - run:
           name: Install pnpm
-          command: |
-            sudo corepack enable
-            corepack prepare pnpm@10.13.1 --activate
+          command: sudo npm install -g pnpm@10.13.1
 
       - restore_cache:
           keys:
@@ -50,9 +48,7 @@ jobs:
 
       - run:
           name: Install pnpm
-          command: |
-            sudo corepack enable
-            corepack prepare pnpm@10.13.1 --activate
+          command: sudo npm install -g pnpm@10.13.1
 
       - restore_cache:
           keys:
