@@ -177,7 +177,7 @@ describe("Download Utils", () => {
 
       await expect(
         downloadRepo(mockRepo, mockExecutionContext, false),
-      ).rejects.toThrow("Failed to fetch repository contents");
+      ).rejects.toThrow("Repository or template not found");
     });
 
     it("should handle invalid JSON responses", async () => {
@@ -266,10 +266,13 @@ describe("Download Utils", () => {
           "  Invalid repository: invalid_template",
         );
         expect(logger.logError).toHaveBeenCalledWith(
-          "  Available repositories:",
+          "\n  Available repositories:",
         );
-        expect(logger.logError).toHaveBeenCalledWith("\t- default");
-        expect(logger.logError).toHaveBeenCalledWith("\t- with_postgres");
+        expect(logger.logError).toHaveBeenCalledWith("    - default");
+        expect(logger.logError).toHaveBeenCalledWith("    - with_postgres");
+        expect(logger.logError).toHaveBeenCalledWith(
+          "\n  Run with --help to see all available options.",
+        );
       }
     });
 

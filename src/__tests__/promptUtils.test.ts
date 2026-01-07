@@ -18,13 +18,19 @@ describe("Prompt Utils", () => {
     // Create mock readline interface
     mockQuestion = vi.fn();
     mockClose = vi.fn();
+    const mockOn = vi.fn().mockReturnThis();
     mockRl = {
       question: mockQuestion,
       close: mockClose,
+      on: mockOn,
     };
 
     // Mock createInterface to return our mock readline interface
     vi.mocked(readline.createInterface).mockReturnValue(mockRl);
+
+    // Mock process stdin/stdout .on() methods
+    vi.spyOn(process.stdin, "on").mockReturnValue(process.stdin as any);
+    vi.spyOn(process.stdout, "on").mockReturnValue(process.stdout as any);
   });
 
   afterEach(() => {

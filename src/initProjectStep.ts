@@ -4,11 +4,7 @@ import { execa } from "execa";
 import { logger } from "./io.js";
 import { CreateSkipServiceError } from "./errors.js";
 import { existsSync } from "fs";
-
-const getErrorMessage = (error: unknown): string => {
-  if (error instanceof Error) return error.message;
-  return String(error);
-};
+import { getErrorMessage } from "./utils/errorUtils.js";
 
 const makeExecutable = async (scriptPath: string) => {
   logger.blue(`\tMaking ${scriptPath} executable...`);

@@ -3,12 +3,8 @@ import { join } from "path";
 import { GitRepo } from "./types.js";
 import { CreateSkipServiceError } from "./errors.js";
 import { logger } from "./io.js";
+import { getErrorMessage } from "./utils/errorUtils.js";
 const GITHUB_API = "https://api.github.com";
-
-const getErrorMessage = (error: unknown): string => {
-  if (error instanceof Error) return error.message;
-  return String(error);
-};
 
 interface GitHubContent {
   name: string;
@@ -25,7 +21,24 @@ const fetchWithHeaders = async (url: string) => {
     },
   });
   if (response.status === 403) {
-    throw new Error("GitHub API rate limit exceeded. Please try again later.");
+    throw new Error(
+      "GitHub API rate limit exceeded.\n" +
+        "  Try again later or authenticate with a GitHub token to increase your rate limit.\n" +
+        "  See: https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting",
+    );
+  }
+  if (response.status === 404) {
+    throw new Error(
+      "Repository or template not found.\n" +
+        "  Check that the template/example name is correct.\n" +
+        "  Run with --help to see available options.",
+    );
+  }
+  if (response.status >= 500) {
+    throw new Error(
+      "GitHub server error. Please try again later.\n" +
+        "  Check GitHub status: https://www.githubstatus.com/",
+    );
   }
   return response;
 };
@@ -55,10 +68,8 @@ const downloadDirectory = async (
     const itemPath = join(localPath, item.name);
 
     if (item.type === "file") {
-      if (verbose) {
-        process.stdout.write("\r\t" + spinner[spinnerIndex]);
-        spinnerIndex = (spinnerIndex + 1) % spinner.length;
-      }
+      process.stdout.write("\r\t" + spinner[spinnerIndex]);
+      spinnerIndex = (spinnerIndex + 1) % spinner.length;
       await downloadFile(item.download_url, itemPath);
     } else if (item.type === "dir") {
       await mkdir(itemPath, { recursive: true });
@@ -71,9 +82,7 @@ const downloadDirectory = async (
     }
   }
 
-  if (verbose) {
-    process.stdout.write("\r\t      \r");
-  }
+  process.stdout.write("\r\t      \r");
 };
 
 const downloadRepo = async (
@@ -98,9 +107,13 @@ const downloadRepo = async (
 
     if (!availableTemplates.includes(repo.name)) {
       logger.logError(`  Invalid repository: ${repo.name}`);
-      logger.logError("  Available repositories:");
-      availableTemplates.forEach((t: string) => logger.logError(`\t- ${t}`));
-      throw new CreateSkipServiceError("Invalid repository", executionContext);
+      logger.logError("\n  Available repositories:");
+      availableTemplates.forEach((t: string) => logger.logError(`    - ${t}`));
+      logger.logError("\n  Run with --help to see all available options.");
+      throw new CreateSkipServiceError(
+        `Invalid repository: ${repo.name}`,
+        executionContext,
+      );
     }
 
     const templateUrl = `${url}/${repo.name}`;

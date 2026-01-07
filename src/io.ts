@@ -13,30 +13,34 @@ class Logger {
     this.level = enabled ? "quiet" : "normal";
   }
 
-  private log(color: (text: string) => string, message: string): void {
-    if (this.level === "verbose") {
-      console.log(color(message));
+  red(message: string): void {
+    if (this.level !== "quiet") {
+      console.log(chalk.red(message));
     }
   }
 
-  red(message: string): void {
-    this.log(chalk.red, message);
-  }
-
   green(message: string): void {
-    this.log(chalk.green, message);
+    if (this.level !== "quiet") {
+      console.log(chalk.green(message));
+    }
   }
 
   yellow(message: string): void {
-    this.log(chalk.yellow, message);
+    if (this.level !== "quiet") {
+      console.log(chalk.yellow(message));
+    }
   }
 
   blue(message: string): void {
-    this.log(chalk.blue, message);
+    if (this.level === "verbose") {
+      console.log(chalk.blue(message));
+    }
   }
 
   gray(message: string): void {
-    this.log(chalk.gray, message);
+    if (this.level === "verbose") {
+      console.log(chalk.gray(message));
+    }
   }
 
   logTitle(message: string): void {

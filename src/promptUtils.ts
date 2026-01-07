@@ -1,12 +1,27 @@
 import readline from "readline";
 
 const prompt = async (question: string): Promise<string> => {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
+  return new Promise((resolve, reject) => {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
 
-  return new Promise((resolve) => {
+    rl.on("error", (error) => {
+      rl.close();
+      reject(new Error(`Readline error: ${error.message}`));
+    });
+
+    process.stdin.on("error", (error) => {
+      rl.close();
+      reject(new Error(`stdin error: ${error.message}`));
+    });
+
+    process.stdout.on("error", (error) => {
+      rl.close();
+      reject(new Error(`stdout error: ${error.message}`));
+    });
+
     rl.question(question, (answer) => {
       rl.close();
       resolve(answer);

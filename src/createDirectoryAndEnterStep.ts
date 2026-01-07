@@ -4,7 +4,6 @@ import fs from "fs";
 import path from "path";
 import { Config } from "./types.js";
 import { prompt } from "./promptUtils.js";
-import { chdir } from "process";
 import { logger } from "./io.js";
 
 const checkDirectoryExists = async (dirPath: string): Promise<boolean> => {
@@ -40,7 +39,7 @@ const createDirectoryAndEnterStep = async (config: Config) => {
 
   await execa("mkdir", ["-p", config.executionContext]);
   logger.green(`\t✓ Creating directory`);
-  chdir(config.executionContext);
+  process.chdir(config.executionContext);
   logger.green(`\t✓ cd ${config.projectName}`);
 };
 

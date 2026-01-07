@@ -1,6 +1,7 @@
 import { Config, GitRepo } from "./types.js";
 import { logger } from "./io.js";
 import { downloadRepo } from "./downloadUtils.js";
+import { capitalize } from "./utils/stringUtils.js";
 
 const isGitHubRateLimitError = (error: unknown): boolean => {
   if (error instanceof Error) {
@@ -21,7 +22,7 @@ const getRepoStep = async (
     return;
   }
 
-  const capitalizedType = repoType.charAt(0).toUpperCase() + repoType.slice(1);
+  const capitalizedType = capitalize(repoType);
 
   logger.logTitle(` - Getting ${repoType} '${repo.name}' from ${repo.repo}`);
 

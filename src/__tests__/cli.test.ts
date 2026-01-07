@@ -15,12 +15,15 @@ const parseCliArgs = (args: string[]) => {
 
   try {
     program.parse(args, { from: "user" });
-  } catch (err: any) {
-    if (err.code === "commander.missingArgument") {
-      throw new Error("Project name is required");
-    }
-    if (err.code === "commander.excessArguments") {
-      throw new Error("Too many arguments");
+  } catch (err: unknown) {
+    if (err instanceof Error && "code" in err) {
+      const cmdErr = err as { code: string };
+      if (cmdErr.code === "commander.missingArgument") {
+        throw new Error("Project name is required");
+      }
+      if (cmdErr.code === "commander.excessArguments") {
+        throw new Error("Too many arguments");
+      }
     }
     throw err;
   }

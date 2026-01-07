@@ -14,15 +14,47 @@ export const createCliParser = () => {
 
   program
     .name("create-skip-service")
-    .description("Initialize a new skip service project")
+    .description(
+      "Bootstrap Skip services with customizable templates and examples",
+    )
     .version(packageJson.version)
-    .argument("<project_name>", "Project name")
-    .option("--no-git-init", "Do not initialize a git repository", true)
-    .option("-t, --template <template>", "Template to use")
-    .option("-e, --example <example>", "Example to use")
-    .option("-v, --verbose", "Run with verbose logging")
-    .option("-q, --quiet", "Run with quiet logging, overrides verbose")
-    .option("-f, --force", "Force overwrite if directory exists");
+    .argument("<project_name>", "Name of the project to create")
+    .option("--no-git-init", "Skip git repository initialization")
+    .option(
+      "-t, --template <template>",
+      "Use a specific template (default, with_postgres, with_react_vite)",
+    )
+    .option(
+      "-e, --example <example>",
+      "Use an example from the Skip repository (blogger, chatroom, hackernews)",
+    )
+    .option("-v, --verbose", "Show detailed output including debug information")
+    .option("-q, --quiet", "Suppress all output except errors")
+    .option("-f, --force", "Overwrite existing directory without prompting")
+    .addHelpText(
+      "after",
+      `
+Examples:
+  $ npx create-skip-service my-project
+  $ npx create-skip-service my-app --template with_postgres
+  $ npx create-skip-service chat-app --template with_react_vite
+  $ npx create-skip-service my-blog --example blogger
+
+Available Templates:
+  default         - Basic reactive Skip service
+  with_postgres   - Skip service with PostgreSQL integration
+  with_react_vite - Full-stack chat app with React + Vite frontend
+
+Available Examples:
+  blogger    - Full-stack blogging platform with Vue.js
+  chatroom   - Real-time chat with Kafka and React
+  hackernews - HackerNews clone with distributed setup
+
+Documentation:
+  https://github.com/SkipLabs/create-skip-service
+  https://github.com/SkipLabs/skip
+`,
+    );
 
   return program;
 };

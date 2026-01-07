@@ -19,12 +19,24 @@ describe("Logger", () => {
 
   describe("Log level behavior", () => {
     describe("Normal mode (default)", () => {
-      it("should not log colored messages in normal mode", () => {
-        logger.red("test message");
-        logger.green("test message");
-        logger.blue("test message");
-        logger.yellow("test message");
-        logger.gray("test message");
+      it("should log important colored messages in normal mode", () => {
+        logger.red("red message");
+        logger.green("green message");
+        logger.yellow("yellow message");
+
+        expect(mockConsoleLog).toHaveBeenCalledTimes(3);
+        expect(mockConsoleLog).toHaveBeenCalledWith(chalk.red("red message"));
+        expect(mockConsoleLog).toHaveBeenCalledWith(
+          chalk.green("green message"),
+        );
+        expect(mockConsoleLog).toHaveBeenCalledWith(
+          chalk.yellow("yellow message"),
+        );
+      });
+
+      it("should not log debug messages in normal mode", () => {
+        logger.blue("blue message");
+        logger.gray("gray message");
 
         expect(mockConsoleLog).not.toHaveBeenCalled();
       });
@@ -121,14 +133,17 @@ describe("Logger", () => {
 
   describe("Log level transitions", () => {
     it("should transition from normal to verbose correctly", () => {
-      // Normal mode - no colored logs
+      // Normal mode - red/green/yellow show
       logger.red("normal message");
-      expect(mockConsoleLog).not.toHaveBeenCalled();
+      expect(mockConsoleLog).toHaveBeenCalledWith(chalk.red("normal message"));
+      mockConsoleLog.mockClear();
 
-      // Switch to verbose
+      // Switch to verbose - all colors show
       logger.setVerbose(true);
       logger.red("verbose message");
+      logger.blue("verbose debug");
       expect(mockConsoleLog).toHaveBeenCalledWith(chalk.red("verbose message"));
+      expect(mockConsoleLog).toHaveBeenCalledWith(chalk.blue("verbose debug"));
     });
 
     it("should transition from verbose to quiet correctly", () => {
@@ -169,19 +184,25 @@ describe("Logger", () => {
 
   describe("State management", () => {
     it("should toggle between verbose and normal", () => {
-      // Start normal
+      // Start normal - red/green/yellow show
       logger.red("normal message");
-      expect(mockConsoleLog).not.toHaveBeenCalled();
+      expect(mockConsoleLog).toHaveBeenCalledWith(chalk.red("normal message"));
+      mockConsoleLog.mockClear();
 
       // Set verbose
       logger.setVerbose(true);
       logger.red("verbose message");
       expect(mockConsoleLog).toHaveBeenCalledWith(chalk.red("verbose message"));
 
-      // Back to normal
+      // Back to normal - red/green/yellow still show
       logger.setVerbose(false);
       mockConsoleLog.mockClear();
       logger.red("normal again");
+      expect(mockConsoleLog).toHaveBeenCalledWith(chalk.red("normal again"));
+
+      // But blue/gray don't show in normal
+      mockConsoleLog.mockClear();
+      logger.blue("debug message");
       expect(mockConsoleLog).not.toHaveBeenCalled();
     });
 

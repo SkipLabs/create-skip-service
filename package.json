@@ -45,7 +45,6 @@
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
     "@types/node": "^22.19.3",
-    "@types/yargs": "^17.0.35",
     "@vitest/ui": "^3.2.4",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
