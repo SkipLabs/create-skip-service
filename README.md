@@ -20,12 +20,12 @@ npx create-skip-service <project-name> [options]
 
 ### Options
 
-- `--template <name>` - Use a specific template (default, with_postgres, with_react_vite)
-- `--example <name>` - Use an example from the Skip repository
-- `--no-git` - Skip git repository initialization
-- `--force` - Overwrite existing directory
-- `--verbose` - Show detailed output
-- `--quiet` - Suppress non-error output
+- `-t, --template <name>` - Use a specific template (default, with_postgres, with_react_vite)
+- `-e, --example <name>` - Use an example from the Skip repository
+- `--no-git-init` - Skip git repository initialization
+- `-f, --force` - Overwrite existing directory
+- `-v, --verbose` - Show detailed output
+- `-q, --quiet` - Suppress non-error output
 
 ## Available Templates
 
