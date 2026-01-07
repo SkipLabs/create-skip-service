@@ -4,7 +4,7 @@ A CLI tool to bootstrap Skip services with various templates. It provides a quic
 
 ## Current status
 
-[![CI](https://github.com/SkipLabs/create-skip-service/actions/workflows/ci.yml/badge.svg)](https://github.com/SkipLabs/create-skip-service/actions/workflows/ci.yml)
+[![CI](https://circleci.com/gh/SkipLabs/create-skip-service.svg?style=shield)](https://circleci.com/gh/SkipLabs/create-skip-service)
 [![npm downloads](https://img.shields.io/npm/dm/create-skip-service.svg)](https://www.npmjs.com/package/create-skip-service)
 
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg)](https://pnpm.io/)
