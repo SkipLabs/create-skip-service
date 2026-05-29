@@ -6,7 +6,7 @@ import {
   type Values,
 } from '@skipruntime/core';
 
-import { ResourceInputs, ConversationID, Message, MessageID, Conversation, UserID } from './types';
+import { ResourceInputs, ConversationID, Conversation, UserID } from './types';
 
 class ConversationByUser implements Mapper<ConversationID, Conversation, UserID, Conversation> {
   constructor(private uid: UserID) {}

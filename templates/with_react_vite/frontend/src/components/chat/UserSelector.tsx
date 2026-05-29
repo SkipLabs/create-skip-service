@@ -15,7 +15,7 @@ export function UserSelector({
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchUsers = () => {
       try {
         setUsers(initialUsers);
         setIsLoading(false);
@@ -25,7 +25,7 @@ export function UserSelector({
       }
     };
 
-    void fetchUsers();
+    fetchUsers();
   }, []);
 
   if (isLoading) {
@@ -42,7 +42,9 @@ export function UserSelector({
       <select
         id="user-select"
         value={selectedUserId}
-        onChange={(e) => onUserSelect(Number(e.target.value))}
+        onChange={(e) => {
+          onUserSelect(Number(e.target.value));
+        }}
         className="user-select-dropdown"
       >
         {users.map((user) => (
