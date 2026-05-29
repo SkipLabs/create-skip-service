@@ -11,7 +11,6 @@ const service = {
   initialData,
   resources: { conversations: Conversations, messages: Messages },
   createGraph(input: ServiceInputs): ResourceInputs {
-    const users = input.users;
     const messages = input.messages;
     const conversations = input.conversations;
     return { messages, conversations };

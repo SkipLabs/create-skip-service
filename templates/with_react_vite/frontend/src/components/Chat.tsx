@@ -11,7 +11,7 @@ interface ChatProps {
 
 const Chat = ({ conversationId }: ChatProps) => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [isConnecting, setIsConnecting] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(true);
   const [connectingError, setConnectingError] = useState<string | null>(null);
 
   const [selectedUserId, setSelectedUserId] = useState(1);
@@ -21,7 +21,7 @@ const Chat = ({ conversationId }: ChatProps) => {
       const all = [...prevMessages, ...newMessages];
       const seen = new Set();
       return all.filter((msg) => {
-        const key = `${String(msg.sender)}|${msg.text}|${String(msg.timestamp)}`;
+        const key = `${String(msg.sender)}|${msg.text}|${msg.timestamp}`;
         if (seen.has(key)) return false;
         seen.add(key);
         return true;
@@ -43,7 +43,6 @@ const Chat = ({ conversationId }: ChatProps) => {
   };
 
   useEffect(() => {
-    setIsConnecting(true);
     handleConnect()
       .then(() => {
         setConnectingError(null);
@@ -62,6 +61,9 @@ const Chat = ({ conversationId }: ChatProps) => {
     return () => {
       handleDisconnect();
     };
+    // Connect once on mount and disconnect on unmount; the stream handlers are
+    // intentionally excluded to avoid reconnecting on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-import express, { Request, response, Response } from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { server, serviceBroker } from './skipservice.js';
 import { stream_url } from './data.js';
