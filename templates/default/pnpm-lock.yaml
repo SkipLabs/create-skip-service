@@ -9,17 +9,17 @@ importers:
   .:
     dependencies:
       '@skiplabs/skip':
-        specifier: ^0.0.19
-        version: 0.0.19
+        specifier: ^0.0.23
+        version: 0.0.23
       '@skipruntime/core':
-        specifier: ^0.0.19
-        version: 0.0.19
+        specifier: ^0.0.23
+        version: 0.0.23
       '@skipruntime/helpers':
-        specifier: ^0.0.19
-        version: 0.0.19
+        specifier: ^0.0.23
+        version: 0.0.23
       '@skipruntime/server':
-        specifier: ^0.0.19
-        version: 0.0.19
+        specifier: ^0.0.23
+        version: 0.0.23
       fastify:
         specifier: ^5.6.2
         version: 5.6.2
@@ -28,8 +28,8 @@ importers:
         specifier: ^22.19.3
         version: 22.19.3
       typescript:
-        specifier: ^5.9.3
-        version: 5.9.3
+        specifier: ^6.0.3
+        version: 6.0.3
 
 packages:
 
@@ -54,32 +54,32 @@ packages:
   '@pinojs/redact@0.4.0':
     resolution: {integrity: sha512-k2ENnmBugE/rzQfEcdWHcCY+/FM3VLzH9cYEsbdsoqrvzAKRhUZeRNhAZvB8OitQJ1TBed3yqWtdjzS6wJKBwg==}
 
-  '@skip-adapter/kafka@0.0.19':
-    resolution: {integrity: sha512-fxGTRUvZ5tFpgqvz7/VEnn5CcNa5p29nfUkjQdYd8Zhn024xg3G45q+mCzkaArZ9d9UqaEbDnshC2pMZKnNT2A==}
+  '@skip-adapter/kafka@0.0.23':
+    resolution: {integrity: sha512-Cc8+DfMXWv5c3+3AKEcEPkwLHSX9TQSjiul96NB1RudEVw9i6+f3h7d7B+dLUtDhXqmb0u1QzgLPqtpTklMIeQ==}
     engines: {node: '>=22.6.0'}
 
-  '@skip-adapter/postgres@0.0.19':
-    resolution: {integrity: sha512-WpMlWQ+rOxkCuIxpSrnVI3JgEkTnj6g5J+H//+eFlf5dOVO925ubfXUbxMSrVG30Rg43/m5LhJnhZCJekOcfoA==}
+  '@skip-adapter/postgres@0.0.23':
+    resolution: {integrity: sha512-NeuvZ/eN7pGuPkasLe+2SCusOdGSwNyVOOcHbQspN/GVvyBUjs+H9d/yYNqpQUjPMIf+XlVeu41tkdvhyIInHA==}
     engines: {node: '>=22.6.0 <23.0.0'}
 
-  '@skiplabs/skip@0.0.19':
-    resolution: {integrity: sha512-lyX0y9Zukw4la9OO6mQbR2myUeRfDAauI1+QdhkqOqKreSzwMkLj5kqGddOoUe8ebYCxHaLA6o5Rb+DkWEGAkw==}
+  '@skiplabs/skip@0.0.23':
+    resolution: {integrity: sha512-tTgd90O+wPYY+bbVh4SfqoWXiH2yAdSDnc6sB6oRz0jSiaKQ4YpQd0PPqO5pZJdBajwekh/tANXe0wax/8Rz3w==}
 
-  '@skipruntime/core@0.0.19':
-    resolution: {integrity: sha512-GNaYJ6S6vT8ZHS3ohlVLd+/pQiE0gs0qk3Z1vu2oGvowFY7GB7frPJdOZPGYQFyymJhAEPUYuEC0lIj3PqIvAg==}
+  '@skipruntime/core@0.0.23':
+    resolution: {integrity: sha512-Z2redCcLTsA7h9x9dI4nCx6VAnygKf7vysERE3QRkHYIX+2356aEou+rd/gMqU2UuEOfO7ACOhpSsO8kqJDPaA==}
 
-  '@skipruntime/helpers@0.0.19':
-    resolution: {integrity: sha512-6ELntOrWIF1o6vqyoVY2P1PSJ/7W8DzvsHje0SfGjygV7yWLS7DD5qEfTVejmJmX96QWZZv1x2NQ6EhH9h6JKQ==}
+  '@skipruntime/helpers@0.0.23':
+    resolution: {integrity: sha512-5qjtvR9P1wtabAOHXzPAK2x9rLOobHOWYGRetbI0N1W0LiQT11t4JNf4AroLrd4neTux67xGXGIggX1SssFcBQ==}
     engines: {node: '>=22.6.0 <23.0.0'}
 
-  '@skipruntime/native@0.0.19':
-    resolution: {integrity: sha512-ySUlfue9rFcR+RkFqB5tP8SFuOCbrzeXBIs3l8S4s+GNRaJQOgtBcU3/ehJU4PNWCq6+CoJtMBJ93ANL+ED+ng==}
+  '@skipruntime/native@0.0.23':
+    resolution: {integrity: sha512-t3Jb8LLat6/NTV8xnIRbAMD11aDVJ0XfFmRivDj5EOYmoMvre5RqwIqPzfi2RpWeZFdx9sIYnsaouVgLCDoBmQ==}
 
-  '@skipruntime/server@0.0.19':
-    resolution: {integrity: sha512-GUHFR3R2f/eUwLjE/E6/+apUSe94sNcoukWymeS4e86ljNy9XPvgezgEqAv1I5aQB8cB8XuqyJJBnv8U+1e/HA==}
+  '@skipruntime/server@0.0.23':
+    resolution: {integrity: sha512-28xz3nE/jlpPjrfwB+VUO/Lsf4v41mu0pUuEEdwAKTZv9xv3/SVU+B57iceZBa0fOLvXEA84vj8m+ax1O3Pv8A==}
 
-  '@skipruntime/wasm@0.0.19':
-    resolution: {integrity: sha512-ff6VevkxI3xf+yU283Ivtz4jNKYlNY5KObZJvrKwZGTgAaQRWrRn7VeJjQkQvqVXOW0FmTMUJthzC1FzAXVrcQ==}
+  '@skipruntime/wasm@0.0.23':
+    resolution: {integrity: sha512-pGWMOsKLOyMPX3vY32kt6wXMmtZWSQ/PJi2GydlP8JFgdqSRco3IbFrkVgwT9jRW0vt9VTxr3HpIuxlSSGrRUw==}
 
   '@types/node@22.19.3':
     resolution: {integrity: sha512-1N9SBnWYOJTrNZCdh/yJE+t910Y128BoyY+zBLWhL3r0TYzlTmFdXrPwHL9DyFZmlEXNQQolTZh3KHV31QDhyA==}
@@ -112,8 +112,8 @@ packages:
   avvio@9.1.0:
     resolution: {integrity: sha512-fYASnYi600CsH/j9EQov7lECAniYiBFiiAtBNuZYLA2leLe9qOvZzqYHFjtIj6gD2VMoMLP14834LFWvr4IfDw==}
 
-  body-parser@1.20.4:
-    resolution: {integrity: sha512-ZTgYYLMOXY9qKU/57FAo8F+HA2dGX7bqGc71txDRC1rS4frdFI5R7NhluHxH6M0YItAP0sHB4uqAOcYKxO6uGA==}
+  body-parser@1.20.5:
+    resolution: {integrity: sha512-3grm+/2tUOvu2cjJkvsIxrv/wVpfXQW4PsQHYm7yk4vfpu7Ekl6nEsYBoJUL6qDwZUx8wUhQ8tR2qz+ad9c9OA==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
 
   bytes@3.1.2:
@@ -201,8 +201,8 @@ packages:
     resolution: {integrity: sha512-IzUmBGPR3+oUG9dUeXynyNmf91/3zUSJg1lCktzKw47OXuhco54U3r9B7O4XX+Rb1Itm9OZ2b0RkTs10bICOxA==}
     engines: {node: '>=12.0.0'}
 
-  express@4.22.1:
-    resolution: {integrity: sha512-F2X8g9P1X7uCPZMA3MVf9wcTqlyNp7IhH5qPCI0izhaOIYXaW9L535tGA3qmjRzpH+bZczqq7hVKxTR4NWnu+g==}
+  express@4.22.2:
+    resolution: {integrity: sha512-IuL+Elrou2ZvCFHs18/CIzy2Nzvo25nZ1/D2eIZlz7c+QUayAcYoiM2BthCjs+EBHVpjYjcuLDAiCWgeIX3X1Q==}
     engines: {node: '>= 0.10.0'}
 
   fast-decode-uri-component@1.0.1:
@@ -428,8 +428,8 @@ packages:
     resolution: {integrity: sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==}
     engines: {node: '>= 0.10'}
 
-  qs@6.14.0:
-    resolution: {integrity: sha512-YWWTjgABSKcvs/nWBi9PycY/JiPJqOD4JA6o9Sej2AtvSGarXxKC3OQSk4pAarbdQlKAh5D4FCQkJNkW+GAn3w==}
+  qs@6.15.2:
+    resolution: {integrity: sha512-Rzq0KEyX/w/tEybncDgdkZrJgVUsUMk3xjh3t5bv3S1HTAtg+uOYt72+ZfwiQwKdysThkTBdL/rTi6HDmX9Ddw==}
     engines: {node: '>=0.6'}
 
   quick-format-unescaped@4.0.4:
@@ -539,8 +539,8 @@ packages:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
     engines: {node: '>= 0.6'}
 
-  typescript@5.9.3:
-    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+  typescript@6.0.3:
+    resolution: {integrity: sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -590,63 +590,63 @@ snapshots:
 
   '@pinojs/redact@0.4.0': {}
 
-  '@skip-adapter/kafka@0.0.19':
+  '@skip-adapter/kafka@0.0.23':
     dependencies:
-      '@skipruntime/core': 0.0.19
+      '@skipruntime/core': 0.0.23
       kafkajs: 2.2.4
     optional: true
 
-  '@skip-adapter/postgres@0.0.19':
+  '@skip-adapter/postgres@0.0.23':
     dependencies:
-      '@skipruntime/core': 0.0.19
+      '@skipruntime/core': 0.0.23
       pg: 8.16.3
       pg-format: 1.0.4
     transitivePeerDependencies:
       - pg-native
     optional: true
 
-  '@skiplabs/skip@0.0.19':
+  '@skiplabs/skip@0.0.23':
     dependencies:
-      '@skipruntime/core': 0.0.19
-      '@skipruntime/helpers': 0.0.19
-      '@skipruntime/server': 0.0.19
-      '@skipruntime/wasm': 0.0.19
+      '@skipruntime/core': 0.0.23
+      '@skipruntime/helpers': 0.0.23
+      '@skipruntime/server': 0.0.23
+      '@skipruntime/wasm': 0.0.23
     optionalDependencies:
-      '@skip-adapter/kafka': 0.0.19
-      '@skip-adapter/postgres': 0.0.19
-      '@skipruntime/native': 0.0.19
+      '@skip-adapter/kafka': 0.0.23
+      '@skip-adapter/postgres': 0.0.23
+      '@skipruntime/native': 0.0.23
     transitivePeerDependencies:
       - pg-native
       - supports-color
 
-  '@skipruntime/core@0.0.19': {}
+  '@skipruntime/core@0.0.23': {}
 
-  '@skipruntime/helpers@0.0.19':
+  '@skipruntime/helpers@0.0.23':
     dependencies:
-      '@skipruntime/core': 0.0.19
+      '@skipruntime/core': 0.0.23
       eventsource: 2.0.2
-      express: 4.22.1
+      express: 4.22.2
     transitivePeerDependencies:
       - supports-color
 
-  '@skipruntime/native@0.0.19':
+  '@skipruntime/native@0.0.23':
     dependencies:
-      '@skipruntime/core': 0.0.19
+      '@skipruntime/core': 0.0.23
     optional: true
 
-  '@skipruntime/server@0.0.19':
+  '@skipruntime/server@0.0.23':
     dependencies:
-      '@skipruntime/core': 0.0.19
-      express: 4.22.1
+      '@skipruntime/core': 0.0.23
+      express: 4.22.2
     optionalDependencies:
-      '@skipruntime/native': 0.0.19
-      '@skipruntime/wasm': 0.0.19
+      '@skipruntime/native': 0.0.23
+      '@skipruntime/wasm': 0.0.23
     transitivePeerDependencies:
       - supports-color
 
-  '@skipruntime/wasm@0.0.19':
+  '@skipruntime/wasm@0.0.23':
     dependencies:
-      '@skipruntime/core': 0.0.19
+      '@skipruntime/core': 0.0.23
 
   '@types/node@22.19.3':
     dependencies:
@@ -679,7 +679,7 @@ snapshots:
       '@fastify/error': 4.2.0
       fastq: 1.19.1
 
-  body-parser@1.20.4:
+  body-parser@1.20.5:
     dependencies:
       bytes: 3.1.2
       content-type: 1.0.5
@@ -689,7 +689,7 @@ snapshots:
       http-errors: 2.0.1
       iconv-lite: 0.4.24
       on-finished: 2.4.1
-      qs: 6.14.0
+      qs: 6.15.2
       raw-body: 2.5.3
       type-is: 1.6.18
       unpipe: 1.0.0
@@ -754,11 +754,11 @@ snapshots:
 
   eventsource@2.0.2: {}
 
-  express@4.22.1:
+  express@4.22.2:
     dependencies:
       accepts: 1.3.8
       array-flatten: 1.1.1
-      body-parser: 1.20.4
+      body-parser: 1.20.5
       content-disposition: 0.5.4
       content-type: 1.0.5
       cookie: 0.7.2
@@ -777,7 +777,7 @@ snapshots:
       parseurl: 1.3.3
       path-to-regexp: 0.1.12
       proxy-addr: 2.0.7
-      qs: 6.14.0
+      qs: 6.15.2
       range-parser: 1.2.1
       safe-buffer: 5.2.1
       send: 0.19.2
@@ -1036,7 +1036,7 @@ snapshots:
       forwarded: 0.2.0
       ipaddr.js: 1.9.1
 
-  qs@6.14.0:
+  qs@6.15.2:
     dependencies:
       side-channel: 1.1.0
 
@@ -1155,7 +1155,7 @@ snapshots:
       media-typer: 0.3.0
       mime-types: 2.1.35
 
-  typescript@5.9.3: {}
+  typescript@6.0.3: {}
 
   undici-types@6.21.0: {}
 

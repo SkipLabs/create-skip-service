@@ -13,7 +13,7 @@ A real-time chat application demonstrating Skip's reactive framework capabilitie
 
 ### Prerequisites
 
-- Node.js ≥ 18
+- Node.js ≥ 22.12
 - pnpm ≥ 8
 
 ### Installation

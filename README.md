@@ -8,7 +8,7 @@ A CLI tool to bootstrap Skip services with various templates. It provides a quic
 [![npm downloads](https://img.shields.io/npm/dm/create-skip-service.svg)](https://www.npmjs.com/package/create-skip-service)
 
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg)](https://pnpm.io/)
-[![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 
 ## Usage
 
@@ -17,6 +17,8 @@ To create a new Skip service, run:
 ```bash
 npx create-skip-service <project-name> [options]
 ```
+
+> **Requirements:** Node.js ≥ 22.12.0.
 
 ### Options
 

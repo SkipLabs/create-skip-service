@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   test-local:
     docker:
-      - image: cimg/node:20.18
+      - image: cimg/node:22.12
     steps:
       - checkout
 
@@ -82,4 +82,4 @@ workflows:
       - test:
           matrix:
             parameters:
-              node-version: ["18.20", "20.18", "22.12", "23.5"]
+              node-version: ["22.12", "24.10"]

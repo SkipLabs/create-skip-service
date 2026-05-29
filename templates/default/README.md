@@ -67,7 +67,7 @@ The template includes the following API endpoints:
 
 ### Prerequisites
 
-- Node.js (Latest LTS version)
+- Node.js ≥ 22.12 (Latest LTS recommended)
 - pnpm package manager
 
 ### Service Ports
