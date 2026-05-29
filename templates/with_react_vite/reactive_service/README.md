@@ -23,7 +23,7 @@ This service provides:
 
 ### Prerequisites
 
-- Node.js ≥ 18
+- Node.js ≥ 22.12
 - pnpm ≥ 8
 
 ### Installation

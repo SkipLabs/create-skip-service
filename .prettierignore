@@ -1,0 +1,9 @@
+# Lockfiles are managed by the package manager, never by Prettier
+pnpm-lock.yaml
+**/pnpm-lock.yaml
+
+# Build output and dependencies
+dist
+**/dist
+node_modules
+**/node_modules
