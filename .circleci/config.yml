@@ -33,10 +33,6 @@ jobs:
           name: Build project
           command: pnpm build
 
-      - run:
-          name: Check formatting
-          command: pnpm format --check
-
   test:
     parameters:
       node-version:
@@ -72,9 +68,19 @@ jobs:
           name: Build project
           command: pnpm build
 
+  check-format:
+    docker:
+      - image: cimg/node:22.12
+    steps:
+      - checkout
+
+      - run:
+          name: Install pnpm
+          command: sudo npm install -g pnpm@10.13.1
+
       - run:
           name: Check formatting
-          command: pnpm format --check
+          command: make check-format
 
 workflows:
   ci:
@@ -83,3 +89,4 @@ workflows:
           matrix:
             parameters:
               node-version: ["22.12", "24.10"]
+      - check-format

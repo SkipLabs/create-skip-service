@@ -7,3 +7,6 @@ dist
 **/dist
 node_modules
 **/node_modules
+
+# Package manager store (kept in-repo by some dev setups)
+.pnpm-store
