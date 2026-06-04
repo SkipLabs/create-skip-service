@@ -4,6 +4,7 @@ jobs:
   test-local:
     docker:
       - image: cimg/node:22.12
+    resource_class: large
     steps:
       - checkout
 
@@ -39,6 +40,7 @@ jobs:
         type: string
     docker:
       - image: cimg/node:<< parameters.node-version >>
+    resource_class: large
     steps:
       - checkout
 
@@ -71,6 +73,7 @@ jobs:
   check-format:
     docker:
       - image: cimg/node:22.12
+    resource_class: large
     steps:
       - checkout
 
