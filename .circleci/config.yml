@@ -55,6 +55,7 @@ jobs:
   test-templates:
     docker:
       - image: cimg/node:22.12
+    resource_class: small
     steps:
       - checkout
 
