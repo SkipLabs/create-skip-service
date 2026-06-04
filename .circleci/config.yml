@@ -52,6 +52,35 @@ jobs:
           name: Check formatting
           command: make check-format
 
+  test-templates:
+    docker:
+      - image: cimg/node:22.12
+    steps:
+      - checkout
+
+      - run:
+          name: Install pnpm
+          command: sudo npm install -g pnpm@10.13.1
+
+      - run:
+          name: Build and lint all templates
+          # Each template is its own package with its own lockfile, so it is
+          # installed and checked independently. @skipruntime/native has a build
+          # script that is not needed for tsc/eslint, so installs use
+          # --ignore-scripts. verify-deps-before-run is disabled so that
+          # `pnpm build`/`pnpm lint` do not trigger a second (failing) install.
+          environment:
+            npm_config_verify_deps_before_run: "false"
+          command: |
+            set -euo pipefail
+            for dir in templates/default \
+                       templates/with_postgres \
+                       templates/with_react_vite/reactive_service \
+                       templates/with_react_vite/frontend; do
+              echo "=== $dir ==="
+              (cd "$dir" && pnpm install --frozen-lockfile --ignore-scripts && pnpm build && pnpm lint)
+            done
+
 workflows:
   ci:
     jobs:
@@ -60,3 +89,4 @@ workflows:
             parameters:
               node-version: ["22.12", "24.10"]
       - check-format
+      - test-templates
