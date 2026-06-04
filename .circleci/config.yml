@@ -1,46 +1,13 @@
 version: 2.1
 
 jobs:
-  test-local:
-    docker:
-      - image: cimg/node:22.12
-    resource_class: large
-    steps:
-      - checkout
-
-      - run:
-          name: Install pnpm
-          command: sudo npm install -g pnpm@10.13.1
-
-      - restore_cache:
-          keys:
-            - pnpm-cache-v1-{{ checksum "pnpm-lock.yaml" }}
-            - pnpm-cache-v1-
-
-      - run:
-          name: Install dependencies
-          command: pnpm install
-
-      - save_cache:
-          key: pnpm-cache-v1-{{ checksum "pnpm-lock.yaml" }}
-          paths:
-            - ~/.local/share/pnpm/store
-
-      - run:
-          name: Run tests
-          command: pnpm test:run
-
-      - run:
-          name: Build project
-          command: pnpm build
-
   test:
     parameters:
       node-version:
         type: string
     docker:
       - image: cimg/node:<< parameters.node-version >>
-    resource_class: large
+    resource_class: small
     steps:
       - checkout
 
@@ -73,7 +40,7 @@ jobs:
   check-format:
     docker:
       - image: cimg/node:22.12
-    resource_class: large
+    resource_class: small
     steps:
       - checkout
 
