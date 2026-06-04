@@ -9,7 +9,6 @@ import {
   unpublishPost,
 } from './db/db.js';
 import { APIError } from './errors.js';
-import { PostCreate } from './db/models.js';
 import { server, serviceBroker } from './skipservice.js';
 
 const app = Fastify({ logger: true });
@@ -41,14 +40,14 @@ interface UpdatePostParams {
   id: string;
 }
 
-app.get('/users', async (request: FastifyRequest, reply: FastifyReply) => {
+app.get('/users', async () => {
   const users = await getUsers();
   return users;
 });
 
 app.get<{ Params: GetUserParams }>(
   '/users/:id',
-  async (request: FastifyRequest<{ Params: GetUserParams }>, reply: FastifyReply) => {
+  async (request: FastifyRequest<{ Params: GetUserParams }>) => {
     const { id } = request.params;
     const user = await getUserById(id);
     return user;
@@ -57,7 +56,7 @@ app.get<{ Params: GetUserParams }>(
 
 app.get<{ Params: GetPostParams }>(
   '/posts/:id',
-  async (request: FastifyRequest<{ Params: GetPostParams }>, reply: FastifyReply) => {
+  async (request: FastifyRequest<{ Params: GetPostParams }>) => {
     const { id } = request.params;
     const post = await getPostById(id);
     return post;
@@ -66,7 +65,7 @@ app.get<{ Params: GetPostParams }>(
 
 app.post<{ Body: PostCreateBody }>(
   '/posts',
-  async (request: FastifyRequest<{ Body: PostCreateBody }>, reply: FastifyReply) => {
+  async (request: FastifyRequest<{ Body: PostCreateBody }>) => {
     const { title, content, author_id, status } = request.body;
     const post = await createPost({
       title,
@@ -94,7 +93,7 @@ app.get('/streams/posts', async (request: FastifyRequest, reply: FastifyReply) =
 
 app.patch<{ Params: UpdatePostParams }>(
   '/posts/:id/publish',
-  async (request: FastifyRequest<{ Params: UpdatePostParams }>, reply: FastifyReply) => {
+  async (request: FastifyRequest<{ Params: UpdatePostParams }>) => {
     const { id } = request.params;
     const post = await publishPost(id);
     return post;
@@ -103,7 +102,7 @@ app.patch<{ Params: UpdatePostParams }>(
 
 app.patch<{ Params: UpdatePostParams }>(
   '/posts/:id/unpublish',
-  async (request: FastifyRequest<{ Params: UpdatePostParams }>, reply: FastifyReply) => {
+  async (request: FastifyRequest<{ Params: UpdatePostParams }>) => {
     const { id } = request.params;
     const post = await unpublishPost(id);
     return post;

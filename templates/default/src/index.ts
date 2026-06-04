@@ -1,4 +1,4 @@
-import Fastify, { FastifyRequest, FastifyReply } from "fastify";
+import Fastify, { FastifyReply } from "fastify";
 import { server, serviceBroker } from "./skipservice.mjs";
 
 // Initialize Fastify app

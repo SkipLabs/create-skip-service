@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "start": "node dist/index.js",
-    "clean": "rm -rf dist node_modules"
+    "clean": "rm -rf dist node_modules",
+    "lint": "eslint 'src/**/*.{js,ts,mts}'",
+    "format": "prettier --write 'src/**/*.{js,ts,mts}'"
   },
   "repository": {
     "type": "git",
@@ -20,12 +22,20 @@
     "url": "https://github.com/SkipLabs/reactive_social_network_service_poc/issues"
   },
   "homepage": "https://github.com/SkipLabs/reactive_social_network_service_poc#readme",
+  "packageManager": "pnpm@10.13.1",
   "engines": {
     "node": ">=22.12.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/node": "^22.19.3",
-    "typescript": "^6.0.3"
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.6",
+    "globals": "^17.6.0",
+    "prettier": "^3.7.4",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.60.0"
   },
   "type": "module",
   "dependencies": {
