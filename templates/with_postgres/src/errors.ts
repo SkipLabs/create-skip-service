@@ -1,7 +1,7 @@
 export class APIError extends Error {
   constructor(
     public statusCode: number,
-    message: string
+    message: string,
   ) {
     super(message);
     this.name = this.constructor.name;

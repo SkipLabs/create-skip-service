@@ -43,7 +43,7 @@ frontend/
 │   ├── components/     # UI components
 │   │   ├── chat/      # Chat components
 │   │   └── InfoPanel.tsx
-│   ├── services/      # API services
+│   ├── api/           # API client and streaming
 │   ├── data.ts        # Configuration
 │   └── App.tsx        # Root component
 └── index.html

@@ -1,7 +1,7 @@
-import express, { Request, Response } from 'express';
-import cors from 'cors';
-import { server, serviceBroker } from './skipservice.js';
-import { stream_url } from './data.js';
+import express, { Request, Response } from "express";
+import cors from "cors";
+import { server, serviceBroker } from "./skipservice.js";
+import { stream_url } from "./data.js";
 
 // Initialize Express app
 const app = express();
@@ -15,7 +15,7 @@ const expressServer = app.listen(8082, () => {
 
 // Utility function to handle errors
 const handleError = (res: Response, error: unknown) => {
-  console.error('Error: ', error);
+  console.error("Error: ", error);
   res.status(500).json(error);
 };
 
@@ -23,16 +23,16 @@ const getMessagesByConversation = async (req: Request, res: Response) => {
   try {
     const cid = Number(req.params.cid);
     if (isNaN(cid)) {
-      res.status(400).json({ error: 'Invalid conversation ID' });
+      res.status(400).json({ error: "Invalid conversation ID" });
       return;
     }
 
-    const messagesUUID = await serviceBroker.getStreamUUID('messages', cid);
+    const messagesUUID = await serviceBroker.getStreamUUID("messages", cid);
     const response = await fetch(`${stream_url}${messagesUUID}`);
 
     // Check if the fetch response is ok before proceeding
     if (!response.ok) {
-      res.status(response.status).json({ error: 'Failed to fetch messages' });
+      res.status(response.status).json({ error: "Failed to fetch messages" });
       return;
     }
 
@@ -51,7 +51,7 @@ const getMessagesByConversation = async (req: Request, res: Response) => {
           if (done) break;
           if (value) {
             if (!res.write(value)) {
-              await new Promise((resolve) => res.once('drain', resolve));
+              await new Promise((resolve) => res.once("drain", resolve));
             }
           }
         }
@@ -73,13 +73,18 @@ const getMessagesByConversation = async (req: Request, res: Response) => {
     } else {
       // If we've already started streaming, we can't send an error response
       // Just log the error and end the response
-      console.error('Error during streaming:', error);
+      console.error("Error during streaming:", error);
       res.end();
     }
   }
 };
 
-const updateEntity = async (entity: string, idParam: string, req: Request, res: Response) => {
+const updateEntity = async (
+  entity: string,
+  idParam: string,
+  req: Request,
+  res: Response,
+) => {
   try {
     const id = Number(req.params[idParam]);
     await serviceBroker.update(entity, [[id, [req.body]]]);
@@ -89,17 +94,21 @@ const updateEntity = async (entity: string, idParam: string, req: Request, res: 
   }
 };
 
-app.get('/messages/:cid', (req: Request, res: Response) => getMessagesByConversation(req, res));
-app.put('/messages/:id', (req: Request, res: Response) => updateEntity('messages', 'id', req, res));
+app.get("/messages/:cid", (req: Request, res: Response) =>
+  getMessagesByConversation(req, res),
+);
+app.put("/messages/:id", (req: Request, res: Response) =>
+  updateEntity("messages", "id", req, res),
+);
 
 // Graceful shutdown handler for:
 // - SIGINT: Ctrl+C in terminal
 // - SIGTERM: System termination requests (kill command, container orchestration, etc.)
-['SIGTERM', 'SIGINT'].forEach((sig) =>
+["SIGTERM", "SIGINT"].forEach((sig) =>
   process.on(sig, async () => {
     await server.close();
     expressServer.close(() => {
-      console.log('\nServers shut down.');
+      console.log("\nServers shut down.");
     });
-  })
+  }),
 );

@@ -4,9 +4,9 @@ This project includes comprehensive testing and quality assurance measures to en
 
 ## Test Suite
 
-- **154 tests** across **9 test files**
-- **100% pass rate**
-- Covers all CLI modules and functionality
+The suite lives in `src/__tests__/`, one test file per module. Run
+`pnpm test:run` for the current test and file counts — this document
+deliberately avoids hard-coding them.
 
 ### Running Tests
 
@@ -20,7 +20,7 @@ pnpm test:run
 # Run tests with UI
 pnpm test:ui
 
-# Run tests with coverage (requires @vitest/coverage package)
+# Run tests with coverage
 pnpm test:coverage
 
 # TypeScript type checking
@@ -63,15 +63,16 @@ pnpm pre-push
 
 The test suite covers:
 
-- **CLI argument parsing** (13 tests)
-- **Error handling** (12 tests)
-- **Logger functionality** (25 tests)
-- **User prompts** (16 tests)
-- **Download utilities** (17 tests)
-- **Template operations** (16 tests)
-- **Example operations** (20 tests)
-- **Git operations** (18 tests)
-- **Project initialization** (17 tests)
+- **CLI argument parsing and Config building** (`cli.test.ts`, exercising the real `buildConfig`)
+- **Input validation** (`validators.test.ts`)
+- **Error handling** (`errors.test.ts`)
+- **Logger functionality** (`logger.test.ts`)
+- **User prompts** (`promptUtils.test.ts`)
+- **Download utilities** (`downloadUtils.test.ts`)
+- **Template/example download step** (`getRepoStep.test.ts`)
+- **Directory creation and overwrite prompting** (`createDirectoryAndEnterStep.test.ts`)
+- **Git operations** (`gitStep.test.ts`)
+- **Project initialization** (`initProjectStep.test.ts`)
 
 ## Quality Standards
 

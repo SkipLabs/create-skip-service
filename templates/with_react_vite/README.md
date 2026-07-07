@@ -27,7 +27,7 @@ cd my-service
 ## Features
 
 - **Real-time Streaming**: Built-in support for Skip's reactive data system
-- **Modern Frontend**: React 18 with Vite for lightning-fast development
+- **Modern Frontend**: React 19 with Vite for lightning-fast development
 - **TypeScript Support**: Full TypeScript setup across frontend and backend
 - **API Endpoints**: Pre-configured REST endpoints for chat functionality
 - **Development Tools**: Includes formatting, building, and cleaning scripts
@@ -63,7 +63,7 @@ In the project directory, you can run:
 └── reactive_service/   # Skip reactive service
     ├── src/
     │   ├── index.ts   # Express server exposing API
-    │   ├── skipservice.mts  # Skip service and reactive graph
+    │   ├── skipservice.ts  # Skip service and reactive graph
     │   └── ...
     └── ...
 ```
@@ -74,9 +74,8 @@ The template includes the following API endpoints:
 
 ### Chat
 
-- `GET /messages` - Get all messages
-- `POST /messages` - Send a new message
-- `GET /streams/messages` - Get a stream of all messages
+- `GET /messages/:cid` - Stream messages for a conversation
+- `PUT /messages/:id` - Update a message
 
 ## Development
 
@@ -120,4 +119,4 @@ To learn more about Skip and its features:
 
 ## License
 
-This template is licensed under the ISC License.
+This template is licensed under the MIT License.

@@ -5,12 +5,12 @@ import type {
   Values,
   Resource,
   SkipService,
-} from '@skipruntime/core';
+} from "@skipruntime/core";
 
-import { runService } from '@skipruntime/server';
-import { SkipServiceBroker } from '@skipruntime/helpers';
-import { postgresExternalService } from './db/db.js';
-import { Post, User } from './db/models.js';
+import { runService } from "@skipruntime/server";
+import { SkipServiceBroker } from "@skipruntime/helpers";
+import { postgresExternalService } from "./db/db.js";
+import { Post, User } from "./db/models.js";
 
 type PostWithAuthor = {
   id: number;
@@ -30,15 +30,18 @@ type PostWithAuthor = {
 class PostsMapper {
   constructor(private users: EagerCollection<number, User>) {}
 
-  mapEntry(key: number, values: Values<Post>): Iterable<[number, PostWithAuthor]> {
+  mapEntry(
+    key: number,
+    values: Values<Post>,
+  ): Iterable<[number, PostWithAuthor]> {
     const post: Post = values.getUnique();
     let author;
     try {
       author = this.users.getUnique(post.author_id);
     } catch {
       author = {
-        username: 'unknown author',
-        email: 'unknown email',
+        username: "unknown author",
+        email: "unknown email",
       };
     }
     return [
@@ -77,7 +80,9 @@ class PostsResource implements Resource<PostsResourceInputs> {
     else this.limit = params.limit;
   }
 
-  instantiate(collections: PostsResourceInputs): EagerCollection<number, PostWithAuthor> {
+  instantiate(
+    collections: PostsResourceInputs,
+  ): EagerCollection<number, PostWithAuthor> {
     return collections.posts.take(this.limit);
   }
 }
@@ -88,16 +93,19 @@ export const service: SkipService<PostsServiceInputs, PostsResourceInputs> = {
   initialData: {},
   resources: { posts: PostsResource },
   externalServices: { postgres: postgresExternalService },
-  createGraph(_inputs: PostsServiceInputs, context: Context): PostsResourceInputs {
-    const serialIDKey = { key: { col: 'id', type: 'SERIAL' } };
+  createGraph(
+    _inputs: PostsServiceInputs,
+    context: Context,
+  ): PostsResourceInputs {
+    const serialIDKey = { key: { col: "id", type: "SERIAL" } };
     const posts = context.useExternalResource<number, Post>({
-      service: 'postgres',
-      identifier: 'posts',
+      service: "postgres",
+      identifier: "posts",
       params: serialIDKey,
     });
     const users = context.useExternalResource<number, User>({
-      service: 'postgres',
-      identifier: 'users',
+      service: "postgres",
+      identifier: "users",
       params: serialIDKey,
     });
     return {
@@ -114,7 +122,7 @@ const server = await runService(service, {
 
 // Initialize the service broker for client communication
 const serviceBroker = new SkipServiceBroker({
-  host: 'localhost',
+  host: "localhost",
   control_port: 8081,
   streaming_port: 8080,
 });

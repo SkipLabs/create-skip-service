@@ -29,6 +29,16 @@ npx create-skip-service <project-name> [options]
 - `-v, --verbose` - Show detailed output
 - `-q, --quiet` - Suppress non-error output
 
+### GitHub API rate limits
+
+Templates and examples are downloaded through the GitHub API, which allows
+about 60 unauthenticated requests per hour. If you hit the limit, set the
+`GITHUB_TOKEN` environment variable to any valid GitHub token:
+
+```bash
+GITHUB_TOKEN=$(gh auth token) npx create-skip-service my-project
+```
+
 ## Available Templates
 
 Templates can be found [here](https://github.com/SkipLabs/create-skip-service/tree/main/templates).

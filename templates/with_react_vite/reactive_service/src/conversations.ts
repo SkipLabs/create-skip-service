@@ -4,16 +4,21 @@ import {
   type Mapper,
   type Resource,
   type Values,
-} from '@skipruntime/core';
+} from "@skipruntime/core";
 
-import { ResourceInputs, ConversationID, Conversation, UserID } from './types';
+import { ResourceInputs, ConversationID, Conversation, UserID } from "./types";
 
-class ConversationByUser implements Mapper<ConversationID, Conversation, UserID, Conversation> {
+class ConversationByUser implements Mapper<
+  ConversationID,
+  Conversation,
+  UserID,
+  Conversation
+> {
   constructor(private uid: UserID) {}
 
   mapEntry(
     cid: ConversationID,
-    values: Values<Conversation>
+    values: Values<Conversation>,
   ): Iterable<[ConversationID, Conversation]> {
     if (values.getUnique().members.includes(this.uid)) {
       return [[cid, values.getUnique()]];
@@ -26,11 +31,14 @@ class Conversations implements Resource<ResourceInputs> {
   private readonly uid: UserID;
 
   constructor(params: Json) {
-    if (typeof params != 'number') throw new Error("Missing required number parameter 'uid'");
+    if (typeof params != "number")
+      throw new Error("Missing required number parameter 'uid'");
     this.uid = params;
   }
 
-  instantiate(inputs: ResourceInputs): EagerCollection<ConversationID, Conversation> {
+  instantiate(
+    inputs: ResourceInputs,
+  ): EagerCollection<ConversationID, Conversation> {
     return inputs.conversations.map(ConversationByUser, this.uid);
   }
 }

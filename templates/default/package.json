@@ -1,7 +1,7 @@
 {
-  "name": "reactive_social_network_service_poc",
+  "name": "skip-default",
   "version": "1.0.0",
-  "description": "Proof of concept of reactive programming in the context of a social network service",
+  "description": "Basic reactive Skip service",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,17 +11,9 @@
     "lint": "eslint 'src/**/*.{js,ts,mts}'",
     "format": "prettier --write 'src/**/*.{js,ts,mts}'"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SkipLabs/reactive_social_network_service_poc.git"
-  },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/SkipLabs/reactive_social_network_service_poc/issues"
-  },
-  "homepage": "https://github.com/SkipLabs/reactive_social_network_service_poc#readme",
+  "license": "MIT",
   "packageManager": "pnpm@10.13.1",
   "engines": {
     "node": ">=22.12.0"

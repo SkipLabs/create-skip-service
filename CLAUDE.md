@@ -40,27 +40,27 @@ pnpm vitest run src/__tests__/cli.test.ts
 ### Core Components
 
 - **cli.ts**: Main entry point that orchestrates the setup steps and executes the main function
-- **cliParser.ts**: Contains the CLI argument parsing logic using Commander.js, extracted for testability
+- **cliParser.ts**: Commander.js parser factory (`createCliParser`) plus `buildConfig`, which validates arguments and assembles the `Config` — both exported for direct unit testing
 - **Step-based execution**: The tool uses a pipeline of steps executed sequentially:
   1. `createDirectoryAndEnterStep` - Creates project directory
-  2. `getTemplateStep` - Downloads template from GitHub
-  3. `getExampleStep` - Downloads example if specified
-  4. `initProjectStep` - Initializes the project (makes scripts executable)
-  5. `gitStep` - Initializes git repository
+  2. `getRepoStep` (called once for "template", once for "example") - Downloads the selected template or example from GitHub
+  3. `initProjectStep` - Initializes the project (makes scripts executable)
+  4. `gitStep` - Initializes git repository
 
 ### Key Modules
 
-- **downloadUtils.ts**: GitHub API integration for recursive repository downloads with rate limiting protection
-- **io.ts**: Multi-level logging system (verbose, normal, quiet) with colored output using chalk
+- **downloadUtils.ts**: GitHub API integration for recursive repository downloads; honors the `GITHUB_TOKEN` env var to raise the API rate limit
+- **io.ts**: Multi-level logging system (verbose, normal, quiet) with colored output using chalk; `logger.progress` writes raw spinner output that respects quiet mode
 - **promptUtils.ts**: Interactive user prompts for confirmations and directory overwrite handling
 - **types.ts**: Core data structures including Config and GitRepo interfaces
-- **errors.ts**: Custom error class (`CreateSkipServiceError`) that carries execution context for cleanup
-- Individual step files: `createDirectoryAndEnterStep.ts`, `getTemplateStep.ts`, `getExampleStep.ts`, `initProjectStep.ts`, `gitStep.ts`
+- **errors.ts**: Custom error class (`CreateSkipServiceError`) that carries execution context
+- **utils/**: `validators.ts` (project/template name validation), `errorUtils.ts` (error message extraction), `stringUtils.ts`
+- Individual step files: `createDirectoryAndEnterStep.ts`, `getRepoStep.ts`, `initProjectStep.ts`, `gitStep.ts`
 
 ### Key Features
 
 - **Template system**: Downloads templates from `SkipLabs/create-skip-service/templates/` or examples from `SkipLabs/skip/examples/`
-- **Error handling**: Custom `CreateSkipServiceError` class that triggers automatic cleanup on failure - removes partially created project directory
+- **Error handling**: Any step failure after the project directory is created triggers automatic cleanup - the partially created project directory is removed
 - **CLI options**: Supports templates (`--template`), examples (`--example`), git init control (`--no-git-init`), verbose/quiet modes, and force overwrite (`--force`)
 - **GitHub API integration**: Uses GitHub API for template/example downloads with progress indicators and rate limiting
 
@@ -91,11 +91,11 @@ The `Config` type defines the execution context with project name, paths, git se
 ## Important Notes
 
 - Uses ES modules (`"type": "module"` in package.json)
-- Built as an npm package with bin entry point
-- Templates and examples are downloaded from separate GitHub repositories
+- Built as an npm package with bin entry point; `pnpm build` uses `tsconfig.build.json`, which excludes tests from `dist/`
+- Templates and examples are downloaded from separate GitHub repositories; set `GITHUB_TOKEN` to avoid the unauthenticated GitHub API rate limit (~60 requests/hour)
 - Error recovery includes automatic cleanup of partially created projects
 - Husky is configured for pre-commit hooks (lint-staged + test:run) and pre-push hooks (test:run + typecheck)
-- Test framework: Vitest with Node.js environment
-- Comprehensive test suite covering all CLI modules in `src/__tests__/` directory
+- Test framework: Vitest with Node.js environment; tests live in `src/__tests__/` (vitest is scoped to `src/` so stale compiled tests in `dist/` never run)
+- CI (CircleCI) runs the root suite on Node 22/24, a repo-wide Prettier check (`make check-format`), and builds/lints every template package (`make check-templates`)
 - TypeScript with strict configuration and ES2022 target
-- Dependencies: Commander.js (CLI), Chalk (colors), Execa (process execution)
+- Dependencies: Commander.js (CLI), Chalk (colors), Execa (git invocation)

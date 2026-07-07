@@ -5,6 +5,33 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- Malformed "not found" message for unknown templates (unbalanced quote).
+- `initProjectStep` errors now name the script that actually failed instead of
+  always blaming `init_server.sh`.
+- Partial project directories are now cleaned up on **any** step failure, not
+  only `CreateSkipServiceError`s, and error messages are always printed
+  (previously only in `--verbose`).
+- `--quiet` now silences the download progress spinner.
+- Declining the overwrite prompt exits with code 0 instead of 1.
+- `pnpm test:coverage` works (added the missing `@vitest/coverage-v8`).
+- The npm tarball no longer ships compiled tests, and `prettier` is no longer
+  installed as a runtime dependency.
+
+### Changed
+
+- `GITHUB_TOKEN` is honored on GitHub API requests to raise the rate limit.
+- Filesystem operations use `fs/promises` instead of shelling out to
+  `rm`/`mkdir`/`chmod`; `execa` is only used for git.
+- Templates aligned: MIT license everywhere (was a mix of ISC/MIT), unified
+  Prettier config, `engines` added to `with_react_vite/frontend`, and the
+  `default` template package renamed from `reactive_social_network_service_poc`
+  to `skip-default`.
+- Added a root `LICENSE` file (MIT).
+
 ## [1.3.0]
 
 ### Changed

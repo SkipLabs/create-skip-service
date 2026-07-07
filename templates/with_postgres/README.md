@@ -90,4 +90,4 @@ To learn more about Skip and its features:
 
 ## License
 
-This template is licensed under the ISC License.
+This template is licensed under the MIT License.

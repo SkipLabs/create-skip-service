@@ -1,10 +1,10 @@
-import { runService } from '@skipruntime/server';
-import { SkipServiceBroker } from '@skipruntime/helpers';
+import { runService } from "@skipruntime/server";
+import { SkipServiceBroker } from "@skipruntime/helpers";
 
-import { ResourceInputs, ServiceInputs } from './types';
-import { initialData } from './data.js';
-import { Messages } from './messages.js';
-import { Conversations } from './conversations.js';
+import { ResourceInputs, ServiceInputs } from "./types";
+import { initialData } from "./data.js";
+import { Messages } from "./messages.js";
+import { Conversations } from "./conversations.js";
 
 // Service configuration and reactive graph definition
 const service = {
@@ -26,7 +26,7 @@ const server = await runService(service, {
 
 // Initialize the service broker for client communication
 const serviceBroker = new SkipServiceBroker({
-  host: 'localhost',
+  host: "localhost",
   control_port: 8081,
   streaming_port: 8080,
 });
