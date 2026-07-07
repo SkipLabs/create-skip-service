@@ -8,86 +8,14 @@ import { Config } from "./types.js";
 import { createDirectoryAndEnterStep } from "./createDirectoryAndEnterStep.js";
 import { gitStep } from "./gitStep.js";
 import { logger } from "./io.js";
-import { getTemplateStep } from "./getTemplateStep.js";
 import { CreateSkipServiceError } from "./errors.js";
 import { initProjectStep } from "./initProjectStep.js";
-import { getExampleStep } from "./getExampleStep.js";
-import { createCliParser } from "./cliParser.js";
-import {
-  validateProjectName,
-  validateTemplateName,
-} from "./utils/validators.js";
-
-const readCliArguments = (): Config => {
-  const program = createCliParser();
-  program.parse();
-
-  const options = program.opts();
-  const projectName = program.args[0];
-
-  if (!projectName) {
-    throw new Error("Project name is required");
-  }
-
-  const projectValidation = validateProjectName(projectName);
-  if (!projectValidation.valid) {
-    throw new Error(projectValidation.error);
-  }
-
-  if (options.example && options.template) {
-    throw new Error("Example and template cannot be used together");
-  }
-
-  if (options.template) {
-    const templateValidation = validateTemplateName(options.template);
-    if (!templateValidation.valid) {
-      throw new Error(`Invalid template name: ${templateValidation.error}`);
-    }
-  }
-
-  if (options.example) {
-    const exampleValidation = validateTemplateName(options.example);
-    if (!exampleValidation.valid) {
-      throw new Error(`Invalid example name: ${exampleValidation.error}`);
-    }
-  }
-
-  if (options.quiet) {
-    logger.setQuiet(true);
-  }
-
-  if (options.verbose) {
-    logger.setVerbose(true);
-  }
-
-  return {
-    projectName: projectName,
-    executionContext: path.join(process.cwd(), projectName),
-    withGit: options.gitInit,
-    quiet: options.quiet || false,
-    verbose: options.verbose || false,
-    force: options.force || false,
-    example: options.example
-      ? {
-          repo: "SkipLabs/skip",
-          path: "examples",
-          name: options.example.trim() || "blogger",
-        }
-      : null,
-    template: !options.example
-      ? {
-          repo: "SkipLabs/create-skip-service",
-          path: "templates",
-          name: options.template ? options.template.trim() : "default",
-        }
-      : null,
-  };
-};
+import { getRepoStep } from "./getRepoStep.js";
+import { parseCliArguments } from "./cliParser.js";
 
 const steps = [
-  createDirectoryAndEnterStep,
-  getTemplateStep,
-  getExampleStep,
+  (config: Config) => getRepoStep(config, "template"),
+  (config: Config) => getRepoStep(config, "example"),
   initProjectStep,
   gitStep,
 ];
@@ -122,10 +50,27 @@ const showSuccessMessage = (config: Config) => {
 };
 
 const main = async () => {
-  const config: Config = readCliArguments();
+  const config: Config = parseCliArguments();
+
+  if (config.quiet) {
+    logger.setQuiet(true);
+  }
+  if (config.verbose) {
+    logger.setVerbose(true);
+  }
+
   logger.logTitle("Starting setup...");
-  for (const step of steps) {
-    await step(config);
+  await createDirectoryAndEnterStep(config);
+  try {
+    for (const step of steps) {
+      await step(config);
+    }
+  } catch (error) {
+    // The project directory exists at this point: remove it whatever the error.
+    logger.logError("Reverting everything...");
+    process.chdir(path.join(config.executionContext, ".."));
+    rmSync(config.executionContext, { recursive: true, force: true });
+    throw error;
   }
   showSuccessMessage(config);
 };
@@ -133,10 +78,7 @@ const main = async () => {
 // Run main function
 main().catch((error) => {
   if (error instanceof CreateSkipServiceError) {
-    logger.logError("Reverting everything...");
-    process.chdir(path.join(error.executionContext, ".."));
-    rmSync(error.executionContext, { recursive: true, force: true });
-    logger.gray(error.message);
+    logger.logError(error.message);
   } else {
     logger.logError("Error:", error);
   }

@@ -1,37 +1,32 @@
 import path from "path";
 import { Config } from "./types.js";
-import { execa } from "execa";
+import { chmod } from "fs/promises";
 import { logger } from "./io.js";
 import { CreateSkipServiceError } from "./errors.js";
 import { existsSync } from "fs";
 import { getErrorMessage } from "./utils/errorUtils.js";
 
-const makeExecutable = async (scriptPath: string) => {
+const makeExecutable = async (scriptPath: string, executionContext: string) => {
   logger.blue(`\tMaking ${scriptPath} executable...`);
-  await execa("chmod", ["+x", scriptPath]);
+  try {
+    await chmod(scriptPath, 0o755);
+  } catch (error) {
+    throw new CreateSkipServiceError(
+      `Failed to make ${path.basename(scriptPath)} executable: ${getErrorMessage(error)}`,
+      executionContext,
+    );
+  }
   logger.green(`\t${scriptPath} is now executable`);
 };
 
 const initProjectStep = async (config: Config) => {
-  try {
-    const setupScriptPath = path.join(config.executionContext, "setup.sh");
-    if (existsSync(setupScriptPath)) {
-      await makeExecutable(setupScriptPath);
+  for (const script of ["setup.sh", "init_server.sh"]) {
+    const scriptPath = path.join(config.executionContext, script);
+    if (existsSync(scriptPath)) {
+      await makeExecutable(scriptPath, config.executionContext);
     } else {
-      logger.gray("\tsetup.sh does not exist");
+      logger.gray(`\t${script} does not exist`);
     }
-
-    const initScriptPath = path.join(config.executionContext, "init_server.sh");
-    if (existsSync(initScriptPath)) {
-      await makeExecutable(initScriptPath);
-    } else {
-      logger.gray("\tinit_server.sh does not exist");
-    }
-  } catch (error) {
-    throw new CreateSkipServiceError(
-      `Failed to make init_server.sh executable: ${getErrorMessage(error)}`,
-      config.executionContext,
-    );
   }
 };
 

@@ -65,7 +65,7 @@ describe("CreateSkipServiceError", () => {
     it("should have correct name property", () => {
       const error = new CreateSkipServiceError("test", "/path");
 
-      expect(error.name).toBe("Error");
+      expect(error.name).toBe("CreateSkipServiceError");
     });
 
     it("should be throwable and catchable", () => {

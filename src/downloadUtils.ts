@@ -14,16 +14,18 @@ interface GitHubContent {
 }
 
 const fetchWithHeaders = async (url: string) => {
-  const response = await fetch(url, {
-    headers: {
-      Accept: "application/vnd.github.v3+json",
-      "User-Agent": "create-skip-service",
-    },
-  });
+  const headers: Record<string, string> = {
+    Accept: "application/vnd.github.v3+json",
+    "User-Agent": "create-skip-service",
+  };
+  if (process.env.GITHUB_TOKEN) {
+    headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+  }
+  const response = await fetch(url, { headers });
   if (response.status === 403) {
     throw new Error(
       "GitHub API rate limit exceeded.\n" +
-        "  Try again later or authenticate with a GitHub token to increase your rate limit.\n" +
+        "  Try again later or set the GITHUB_TOKEN environment variable to increase your rate limit.\n" +
         "  See: https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting",
     );
   }
@@ -68,7 +70,7 @@ const downloadDirectory = async (
     const itemPath = join(localPath, item.name);
 
     if (item.type === "file") {
-      process.stdout.write("\r\t" + spinner[spinnerIndex]);
+      logger.progress("\r\t" + spinner[spinnerIndex]);
       spinnerIndex = (spinnerIndex + 1) % spinner.length;
       await downloadFile(item.download_url, itemPath);
     } else if (item.type === "dir") {
@@ -82,7 +84,7 @@ const downloadDirectory = async (
     }
   }
 
-  process.stdout.write("\r\t      \r");
+  logger.progress("\r\t      \r");
 };
 
 const downloadRepo = async (
@@ -117,9 +119,9 @@ const downloadRepo = async (
     }
 
     const templateUrl = `${url}/${repo.name}`;
-    process.stdout.write("\t");
+    logger.progress("\t");
     await downloadDirectory(repo, templateUrl, executionContext, verbose);
-    process.stdout.write("\r\t      \r");
+    logger.progress("\r\t      \r");
   } catch (error) {
     if (error instanceof CreateSkipServiceError) throw error;
     throw new CreateSkipServiceError(getErrorMessage(error), executionContext);

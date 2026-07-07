@@ -1,6 +1,5 @@
 import chalk from "chalk";
-import { execa } from "execa";
-import fs from "fs";
+import { access, mkdir, rm } from "fs/promises";
 import path from "path";
 import { Config } from "./types.js";
 import { prompt } from "./promptUtils.js";
@@ -8,7 +7,7 @@ import { logger } from "./io.js";
 
 const checkDirectoryExists = async (dirPath: string): Promise<boolean> => {
   try {
-    await fs.promises.access(dirPath);
+    await access(dirPath);
     return true;
   } catch {
     return false;
@@ -29,15 +28,15 @@ const createDirectoryAndEnterStep = async (config: Config) => {
 
       if (answer.toLowerCase() !== "y") {
         logger.red("Operation aborted.");
-        process.exit(1);
+        process.exit(0);
       }
     }
 
     logger.blue(`Removing existing directory: ${config.executionContext}`);
-    await execa("rm", ["-rf", config.executionContext]);
+    await rm(config.executionContext, { recursive: true, force: true });
   }
 
-  await execa("mkdir", ["-p", config.executionContext]);
+  await mkdir(config.executionContext, { recursive: true });
   logger.green(`\t✓ Creating directory`);
   process.chdir(config.executionContext);
   logger.green(`\t✓ cd ${config.projectName}`);

@@ -43,6 +43,12 @@ class Logger {
     }
   }
 
+  progress(message: string): void {
+    if (this.level !== "quiet") {
+      process.stdout.write(message);
+    }
+  }
+
   logTitle(message: string): void {
     if (this.level !== "quiet") {
       console.log(chalk.blue(message));

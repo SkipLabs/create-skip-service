@@ -14,6 +14,7 @@ vi.mock("../io.js", () => ({
   logger: {
     gray: vi.fn(),
     logError: vi.fn(),
+    progress: vi.fn(),
   },
 }));
 
@@ -32,10 +33,12 @@ describe("Download Utils", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    delete process.env.GITHUB_TOKEN;
   });
 
   afterEach(() => {
     vi.restoreAllMocks();
+    delete process.env.GITHUB_TOKEN;
   });
 
   describe("Basic download functionality", () => {
@@ -123,6 +126,36 @@ describe("Download Utils", () => {
             Accept: "application/vnd.github.v3+json",
             "User-Agent": "create-skip-service",
           },
+        }),
+      );
+    });
+
+    it("should send an Authorization header when GITHUB_TOKEN is set", async () => {
+      process.env.GITHUB_TOKEN = "test-token";
+
+      mockFetch
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: () =>
+            Promise.resolve([
+              { name: "default", type: "dir", path: "templates/default" },
+            ]),
+        })
+        .mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: () => Promise.resolve([]),
+        });
+
+      await downloadRepo(mockRepo, mockExecutionContext, false);
+
+      expect(mockFetch).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({
+          headers: expect.objectContaining({
+            Authorization: "Bearer test-token",
+          }),
         }),
       );
     });

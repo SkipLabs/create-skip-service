@@ -15,4 +15,4 @@ type Config = {
   template: GitRepo | null;
 };
 
-export { Config, GitRepo };
+export type { Config, GitRepo };

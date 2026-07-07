@@ -31,9 +31,8 @@ const getRepoStep = async (
     logger.green(`\t✓ ${capitalizedType} ${repo.name} downloaded successfully`);
   } catch (error) {
     if (repo.name !== "default" && !isGitHubRateLimitError(error)) {
-      const nameFormat = repoType === "template" ? `'${repo.name}` : repo.name;
       logger.yellow(
-        `${capitalizedType} ${nameFormat} not found in ${repo.repo} repo...`,
+        `${capitalizedType} '${repo.name}' not found in ${repo.repo} repo...`,
       );
     }
     throw error;

@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import path from "path";
-import { createCliParser } from "../cliParser.js";
+import { createCliParser, buildConfig } from "../cliParser.js";
 import { Config } from "../types.js";
 
-const parseCliArgs = (args: string[]) => {
+const parseCliArgs = (args: string[]): Config => {
   const program = createCliParser();
 
   // Silence error output and prevent exit for testing
@@ -28,53 +28,10 @@ const parseCliArgs = (args: string[]) => {
     throw err;
   }
 
-  const options = program.opts();
-  const projectName = program.args[0];
-
-  if (!projectName) {
-    throw new Error("Project name is required");
-  }
-
-  if (options.example && options.template) {
-    throw new Error("Example and template cannot be used together");
-  }
-
-  return {
-    projectName: projectName,
-    executionContext: path.join(process.cwd(), projectName),
-    withGit: options.gitInit,
-    quiet: options.quiet || false,
-    verbose: options.verbose || false,
-    force: options.force || false,
-    example: options.example
-      ? {
-          name: options.example || "blogger",
-          repo: "SkipLabs/skip",
-          path: "examples",
-        }
-      : null,
-    template: !options.example
-      ? {
-          repo: "SkipLabs/create-skip-service",
-          path: "templates",
-          name: options.template || "default",
-        }
-      : null,
-  };
+  return buildConfig(program);
 };
 
 describe("CLI Argument Parsing", () => {
-  let originalCwd: string;
-
-  beforeEach(() => {
-    originalCwd = process.cwd();
-    vi.clearAllMocks();
-  });
-
-  afterEach(() => {
-    process.chdir(originalCwd);
-  });
-
   describe("Basic argument parsing", () => {
     it("should parse project name correctly", () => {
       const config: Config = parseCliArgs(["my-project"]);
@@ -97,6 +54,12 @@ describe("CLI Argument Parsing", () => {
 
     it("should throw error when project name is missing", () => {
       expect(() => parseCliArgs([])).toThrow("Project name is required");
+    });
+
+    it("should reject invalid project names", () => {
+      expect(() => parseCliArgs(["../escape"])).toThrow();
+      expect(() => parseCliArgs([".hidden"])).toThrow();
+      expect(() => parseCliArgs(["node_modules"])).toThrow();
     });
   });
 
@@ -148,6 +111,18 @@ describe("CLI Argument Parsing", () => {
           "blogger",
         ]),
       ).toThrow("Example and template cannot be used together");
+    });
+
+    it("should reject template names with path traversal", () => {
+      expect(() =>
+        parseCliArgs(["my-project", "--template", "../../etc"]),
+      ).toThrow("Invalid template name");
+    });
+
+    it("should reject example names with path traversal", () => {
+      expect(() => parseCliArgs(["my-project", "--example", "a/b"])).toThrow(
+        "Invalid example name",
+      );
     });
   });
 
