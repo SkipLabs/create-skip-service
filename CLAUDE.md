@@ -33,6 +33,10 @@ node dist/cli.js <project-name> [options]
 
 # Running a single test file
 bun run vitest run src/__tests__/cli.test.ts
+
+# Makefile wrappers (what CI runs; `make help` lists all targets)
+make check            # check-format + test + typecheck + build
+make check-templates  # install (--ignore-scripts), build and lint each template
 ```
 
 Always use `bun run <script>`: bare `bun test` and `bun build` invoke Bun's own test runner and bundler, not the package scripts.

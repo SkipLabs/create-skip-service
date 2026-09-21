@@ -39,6 +39,7 @@ In the project directory, you can run:
 - `bun run start` - Runs the built service
 - `bun run clean` - Cleans build artifacts and dependencies
 - `bun run format` - Formats code using Prettier
+- `bun run lint` - Lints the source with ESLint
 
 ## Project Structure
 
@@ -55,13 +56,15 @@ src/
 
 The template includes the following API endpoints:
 
-### Active Friends
+### REST API (port 8082, `src/index.ts`)
 
-- `GET /active_friends/:id` - Get active friends for a specific user
+- `GET /active_friends/:uid` - Stream the active friends of a user
+- `PUT /users/:uid` - Create or replace a user (name, active status, friends)
+- `PUT /groups/:gid` - Create or replace a group
 
-### Users
+### Skip control API (port 8081)
 
-- `PATCH /v1/inputs/users` - Update user data (including active status and friends)
+- `PATCH /v1/inputs/users` - Write directly to the `users` input collection
 
 ## Development
 
@@ -92,7 +95,14 @@ bun run start
 curl -LN http://localhost:8082/active_friends/1
 ```
 
-3. Update user data:
+3. Update user data through the REST API:
+
+```bash
+curl -X PUT http://localhost:8082/users/1 \
+  --json '{"name": "Alice", "active": true, "friends": [0, 2, 3]}'
+```
+
+or directly through the Skip control API:
 
 ```bash
 curl http://localhost:8081/v1/inputs/users \

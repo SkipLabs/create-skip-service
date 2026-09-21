@@ -41,14 +41,17 @@ In the project directory, you can run:
 
 - `bun run build` - Builds the service for production
 - `bun run start` - Runs the built service
+- `bun run dev` - Runs the service from source with hot reload (nodemon + ts-node)
 - `bun run clean` - Cleans build artifacts and dependencies
+- `bun run lint` / `bun run format` - ESLint / Prettier
 
 ### Frontend (frontend)
 
-- `bun run dev` - Starts the development server
+- `bun run dev` - Starts the Vite development server
 - `bun run build` - Builds the frontend for production
 - `bun run preview` - Previews the production build
-- `bun run clean` - Cleans build artifacts and dependencies
+- `bun run start` - Serves the production build on the network (`vite preview --host`)
+- `bun run lint` - Lints the source with ESLint
 
 ## Project Structure
 

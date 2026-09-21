@@ -20,6 +20,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `bun run test:coverage` works (added the missing `@vitest/coverage-v8`).
 - The npm tarball no longer ships compiled tests, and `prettier` is no longer
   installed as a runtime dependency.
+- `with_postgres` no longer declares a `client` script whose entry point
+  (`src/client.ts`) did not exist.
+- Documentation corrected against the code: template API routes and ports,
+  per-template script lists, project-structure listings, and the Makefile
+  targets CI runs.
 
 ### Changed
 

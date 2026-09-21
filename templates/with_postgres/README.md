@@ -40,11 +40,11 @@ In the project directory, you can run:
 - `bun run start` - Runs the built service
 - `bun run clean` - Cleans build artifacts and dependencies
 - `bun run format` - Formats code using Prettier
-- `bun run client` - Runs the example client
+- `bun run lint` - Lints the source with ESLint
 
 ## API Structure
 
-The template includes the following API endpoints:
+The Fastify REST API listens on port 3000 (`src/index.ts`) and exposes:
 
 ### Posts
 
@@ -70,7 +70,7 @@ The template includes the following API endpoints:
 
 - Node.js ≥ 22.12 (Latest LTS recommended)
 - Bun ≥ 1.3 (package manager; the service itself runs on Node.js)
-- Docker (for PostgreSQL)
+- Docker (for PostgreSQL; `init_server.sh` starts a `skip-demo-postgres` container)
 
 ### Clean Up
 

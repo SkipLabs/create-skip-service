@@ -50,10 +50,13 @@ This service provides:
 ```
 reactive_service/
 ├── src/
-│   ├── index.ts        # Express server setup
-│   ├── skipservice.ts  # Skip service configuration
-│   └── data.ts         # Configuration
-├── dist/              # Compiled output
+│   ├── index.ts          # Express server exposing the REST API
+│   ├── skipservice.ts    # Skip service and reactive graph
+│   ├── messages.ts       # Message resources and mappers
+│   ├── conversations.ts  # Conversation resources and mappers
+│   ├── types.ts          # Shared types
+│   └── data.ts           # Seed data and configuration
+├── dist/                 # Compiled output
 └── package.json
 ```
 
@@ -70,6 +73,7 @@ Available commands:
 - `bun run build` - Build for production
 - `bun run dev` - Start with hot reload
 - `bun run lint` - Run linter
+- `bun run format` - Format with Prettier
 
 ## Running with Frontend
 

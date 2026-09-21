@@ -8,8 +8,7 @@
     "start": "node dist/index.js",
     "clean": "rm -rf dist node_modules",
     "format": "prettier --write 'src/**/*.{js,ts}'",
-    "lint": "eslint 'src/**/*.{js,ts}'",
-    "client": "node --loader ts-node/esm src/client.ts"
+    "lint": "eslint 'src/**/*.{js,ts}'"
   },
   "keywords": [],
   "author": "",

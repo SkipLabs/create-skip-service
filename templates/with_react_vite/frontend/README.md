@@ -41,9 +41,10 @@ A real-time chat application demonstrating Skip's reactive framework capabilitie
 frontend/
 ├── src/
 │   ├── components/     # UI components
-│   │   ├── chat/      # Chat components
+│   │   ├── chat/      # Chat components (message list, input, ...)
+│   │   ├── Chat.tsx   # Chat page
 │   │   └── InfoPanel.tsx
-│   ├── api/           # API client and streaming
+│   ├── api/           # Streaming hooks (useStream, usePostMessage) and types
 │   ├── data.ts        # Configuration
 │   └── App.tsx        # Root component
 └── index.html
@@ -64,6 +65,7 @@ Available commands:
 - `bun run build` - Build for production
 - `bun run preview` - Preview build
 - `bun run lint` - Run linter
+- `bun run start` - Serve the production build (`vite preview --host`)
 
 ## Running the Application
 

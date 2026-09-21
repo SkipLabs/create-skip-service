@@ -106,6 +106,20 @@ To work on this tool locally:
 node dist/cli.js <project-name> [options]
 ```
 
+### Repository checks
+
+A `Makefile` wraps the same checks CI runs (`make help` lists every target):
+
+```bash
+make check            # Prettier check + tests + typecheck + build (root)
+make check-templates  # Install, build and lint each template package
+make format           # Format the whole repo in place
+```
+
+Each template under `templates/` is an independent package with its own
+`bun.lock`; `make check-templates` installs them with `--ignore-scripts`, so the
+`@skipruntime/native` addon is not compiled in CI.
+
 ## Available Examples
 
 You can also bootstrap your project using examples from the Skip repository by using the `--example` flag:
