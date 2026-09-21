@@ -14,25 +14,25 @@ A real-time chat application demonstrating Skip's reactive framework capabilitie
 ### Prerequisites
 
 - Node.js ≥ 22.12
-- pnpm ≥ 8
+- Bun ≥ 1.3 (package manager)
 
 ### Installation
 
 1. Install dependencies:
 
    ```bash
-   pnpm install
+   bun install
    ```
 
 2. Start development:
 
    ```bash
-   pnpm dev
+   bun run dev
    ```
 
 3. Build for production:
    ```bash
-   pnpm build
+   bun run build
    ```
 
 ## Project Overview
@@ -60,10 +60,10 @@ frontend/
 
 Available commands:
 
-- `pnpm dev` - Start dev server
-- `pnpm build` - Build for production
-- `pnpm preview` - Preview build
-- `pnpm lint` - Run linter
+- `bun run dev` - Start dev server
+- `bun run build` - Build for production
+- `bun run preview` - Preview build
+- `bun run lint` - Run linter
 
 ## Running the Application
 
@@ -71,13 +71,13 @@ Available commands:
 
    ```bash
    cd ../reactive_service
-   pnpm start
+   bun run start
    ```
 
 2. Start the frontend:
    ```bash
    cd frontend
-   pnpm dev
+   bun run dev
    ```
 
 Visit http://localhost:5173 to see the application.

@@ -24,25 +24,25 @@ This service provides:
 ### Prerequisites
 
 - Node.js ≥ 22.12
-- pnpm ≥ 8
+- Bun ≥ 1.3 (package manager; the service itself runs on Node.js)
 
 ### Installation
 
 1. Install dependencies:
 
    ```bash
-   pnpm install
+   bun install
    ```
 
 2. Start the service:
 
    ```bash
-   pnpm start
+   bun run start
    ```
 
 3. Build for production:
    ```bash
-   pnpm build
+   bun run build
    ```
 
 ## Project Structure
@@ -66,23 +66,23 @@ reactive_service/
 
 Available commands:
 
-- `pnpm start` - Start the server
-- `pnpm build` - Build for production
-- `pnpm dev` - Start with hot reload
-- `pnpm lint` - Run linter
+- `bun run start` - Start the server
+- `bun run build` - Build for production
+- `bun run dev` - Start with hot reload
+- `bun run lint` - Run linter
 
 ## Running with Frontend
 
 1. Start this service:
 
    ```bash
-   pnpm start
+   bun run start
    ```
 
 2. In a separate terminal, start the frontend:
    ```bash
    cd ../frontend
-   pnpm dev
+   bun run dev
    ```
 
 The service runs on http://localhost:8082

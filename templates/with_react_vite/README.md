@@ -39,16 +39,16 @@ In the project directory, you can run:
 
 ### Backend (reactive_service)
 
-- `pnpm build` - Builds the service for production
-- `pnpm start` - Runs the built service
-- `pnpm clean` - Cleans build artifacts and dependencies
+- `bun run build` - Builds the service for production
+- `bun run start` - Runs the built service
+- `bun run clean` - Cleans build artifacts and dependencies
 
 ### Frontend (frontend)
 
-- `pnpm dev` - Starts the development server
-- `pnpm build` - Builds the frontend for production
-- `pnpm preview` - Previews the production build
-- `pnpm clean` - Cleans build artifacts and dependencies
+- `bun run dev` - Starts the development server
+- `bun run build` - Builds the frontend for production
+- `bun run preview` - Previews the production build
+- `bun run clean` - Cleans build artifacts and dependencies
 
 ## Project Structure
 
@@ -82,7 +82,7 @@ The template includes the following API endpoints:
 ### Prerequisites
 
 - Node.js ≥ 22.12 (Latest LTS recommended)
-- pnpm package manager
+- Bun ≥ 1.3 (package manager; the service itself runs on Node.js)
 
 ### Service Ports
 
@@ -98,13 +98,13 @@ The services run on the following ports:
 1. Start the reactive service:
 
 ```bash
-cd reactive_service && pnpm start
+cd reactive_service && bun run start
 ```
 
 2. In a new terminal, start the frontend:
 
 ```bash
-cd frontend && pnpm dev
+cd frontend && bun run dev
 ```
 
 The frontend will be available at http://localhost:5173

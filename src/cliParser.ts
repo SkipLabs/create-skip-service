@@ -44,6 +44,7 @@ Examples:
   $ npx create-skip-service my-app --template with_postgres
   $ npx create-skip-service chat-app --template with_react_vite
   $ npx create-skip-service my-blog --example blogger
+  $ bunx create-skip-service my-project
 
 Available Templates:
   default         - Basic reactive Skip service

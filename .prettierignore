@@ -1,6 +1,6 @@
 # Lockfiles are managed by the package manager, never by Prettier
-pnpm-lock.yaml
-**/pnpm-lock.yaml
+bun.lock
+**/bun.lock
 
 # Build output and dependencies
 dist
@@ -8,8 +8,5 @@ dist
 node_modules
 **/node_modules
 
-# Package manager store (kept in-repo by some dev setups)
-.pnpm-store
-
-# Generated coverage reports (pnpm test:coverage)
+# Generated coverage reports (bun run test:coverage)
 coverage

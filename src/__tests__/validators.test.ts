@@ -56,6 +56,8 @@ describe("validateProjectName", () => {
   it("should reject reserved names regardless of case", () => {
     expect(validateProjectName("node_modules").valid).toBe(false);
     expect(validateProjectName("NPM").valid).toBe(false);
+    expect(validateProjectName("bun").valid).toBe(false);
+    expect(validateProjectName("bun.lock").valid).toBe(false);
     expect(validateProjectName("package.json").valid).toBe(false);
   });
 });

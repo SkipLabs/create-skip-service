@@ -27,8 +27,9 @@ const showSuccessMessage = (config: Config) => {
   logger.green(`  cd ${config.projectName}`);
 
   if (config.template?.name === "with_react_vite") {
-    logger.green("  pnpm install");
-    logger.green("  pnpm dev");
+    logger.green("  ./setup.sh");
+    logger.green("  cd reactive_service && bun run start");
+    logger.green("  # In a second terminal: cd frontend && bun run dev");
   } else {
     logger.green("  # Follow the instructions in the README.md");
   }

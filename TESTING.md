@@ -5,29 +5,33 @@ This project includes comprehensive testing and quality assurance measures to en
 ## Test Suite
 
 The suite lives in `src/__tests__/`, one test file per module. Run
-`pnpm test:run` for the current test and file counts — this document
+`bun run test:run` for the current test and file counts — this document
 deliberately avoids hard-coding them.
 
 ### Running Tests
 
 ```bash
 # Run tests in watch mode (development)
-pnpm test
+bun run test
 
 # Run tests once
-pnpm test:run
+bun run test:run
 
 # Run tests with UI
-pnpm test:ui
+bun run test:ui
 
 # Run tests with coverage
-pnpm test:coverage
+bun run test:coverage
 
 # TypeScript type checking
-pnpm typecheck
+bun run typecheck
 ```
 
 ## Git Hooks
+
+The hooks invoke `bun run ...`, so `bun` must be on the PATH of whatever runs
+git. GUI clients that do not load your shell profile can export it from
+`~/.config/husky/init.sh` (for example `export PATH="$HOME/.bun/bin:$PATH"`).
 
 The project uses [Husky](https://typicode.github.io/husky/) with automated quality checks:
 
@@ -53,10 +57,10 @@ You can run the same checks manually:
 
 ```bash
 # Pre-commit checks
-pnpm pre-commit
+bun run pre-commit
 
 # Pre-push checks
-pnpm pre-push
+bun run pre-push
 ```
 
 ## Test Coverage

@@ -1,5 +1,17 @@
 version: 2.1
 
+# Bun is the package manager; Node.js (from the cimg/node image) stays the
+# runtime for tsc, Vitest and the templates' node-gyp build. Bun ignores the
+# packageManager field, so the version is pinned here.
+commands:
+  install-bun:
+    steps:
+      - run:
+          name: Install Bun
+          command: |
+            curl -fsSL https://bun.sh/install | bash -s "bun-v1.3.14"
+            echo 'export PATH="$HOME/.bun/bin:$PATH"' >> "$BASH_ENV"
+
 jobs:
   test:
     parameters:
@@ -10,32 +22,29 @@ jobs:
     resource_class: small
     steps:
       - checkout
-
-      - run:
-          name: Install pnpm
-          command: sudo npm install -g pnpm@10.13.1
+      - install-bun
 
       - restore_cache:
           keys:
-            - pnpm-cache-v1-{{ checksum "pnpm-lock.yaml" }}-<< parameters.node-version >>
-            - pnpm-cache-v1-
+            - bun-cache-v1-{{ checksum "bun.lock" }}-<< parameters.node-version >>
+            - bun-cache-v1-
 
       - run:
           name: Install dependencies
-          command: pnpm install
+          command: bun install --frozen-lockfile
 
       - save_cache:
-          key: pnpm-cache-v1-{{ checksum "pnpm-lock.yaml" }}-<< parameters.node-version >>
+          key: bun-cache-v1-{{ checksum "bun.lock" }}-<< parameters.node-version >>
           paths:
-            - ~/.local/share/pnpm/store
+            - ~/.bun/install/cache
 
       - run:
           name: Run tests
-          command: pnpm test:run
+          command: bun run test:run
 
       - run:
           name: Build project
-          command: pnpm build
+          command: bun run build
 
   check-format:
     docker:
@@ -43,10 +52,7 @@ jobs:
     resource_class: small
     steps:
       - checkout
-
-      - run:
-          name: Install pnpm
-          command: sudo npm install -g pnpm@10.13.1
+      - install-bun
 
       - run:
           name: Check formatting
@@ -58,29 +64,15 @@ jobs:
     resource_class: small
     steps:
       - checkout
-
-      - run:
-          name: Install pnpm
-          command: sudo npm install -g pnpm@10.13.1
+      - install-bun
 
       - run:
           name: Build and lint all templates
           # Each template is its own package with its own lockfile, so it is
-          # installed and checked independently. @skipruntime/native has a build
-          # script that is not needed for tsc/eslint, so installs use
-          # --ignore-scripts. verify-deps-before-run is disabled so that
-          # `pnpm build`/`pnpm lint` do not trigger a second (failing) install.
-          environment:
-            npm_config_verify_deps_before_run: "false"
-          command: |
-            set -euo pipefail
-            for dir in templates/default \
-                       templates/with_postgres \
-                       templates/with_react_vite/reactive_service \
-                       templates/with_react_vite/frontend; do
-              echo "=== $dir ==="
-              (cd "$dir" && pnpm install --frozen-lockfile --ignore-scripts && pnpm build && pnpm lint)
-            done
+          # installed and checked independently. @skipruntime/native has a
+          # node-gyp install script that is not needed for tsc/eslint, so the
+          # Makefile installs with --ignore-scripts.
+          command: make check-templates
 
 workflows:
   ci:

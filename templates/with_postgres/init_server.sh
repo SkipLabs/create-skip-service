@@ -9,12 +9,12 @@ NC='\033[0m' # No Color
 BOLD='\033[1m'
 
 echo -e "\n${BLUE}${BOLD}🧹 Checking local tools...${NC}"
-if ! command -v pnpm &> /dev/null; then
-  echo -e "${RED}pnpm could not be found${NC}"
-  echo -e "Please install pnpm using 'npm install -g pnpm'"
+if ! command -v bun &> /dev/null; then
+  echo -e "${RED}bun could not be found${NC}"
+  echo -e "Please install Bun: curl -fsSL https://bun.sh/install | bash"
   exit 1
 fi
-echo -e "${GREEN}\t✓ pnpm installed${NC}"
+echo -e "${GREEN}\t✓ bun installed${NC}"
 
 if ! command -v docker &> /dev/null; then
   echo -e "${RED}docker could not be found${NC}"
@@ -59,10 +59,10 @@ docker exec -it skip-demo-postgres psql -U skipper -d skipdb -c "SELECT COUNT(*)
 echo -e "${GREEN}\t✓ Successfully verified user count${NC}"
 
 echo -e "\n${BLUE}${BOLD}🔨 Install and build TypeScript...${NC}"
-pnpm install
-pnpm build
+bun install
+bun run build
 echo -e "${GREEN}\t✓ Build complete${NC}"
 
 echo -e "\n${GREEN}${BOLD}🚀 Ready to start the server...${NC}\n"
-echo -e "pnpm start"
+echo -e "bun run start"
 

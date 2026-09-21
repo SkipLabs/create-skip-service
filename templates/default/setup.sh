@@ -4,12 +4,12 @@ echo "🚀 Setting up Skip Chat projects..."
 
 # Install and build reactive service
 echo "📦 Installing dependencies..."
-pnpm install
+bun install
 echo "🔨 Building..."
-pnpm build
+bun run build
 
 echo "✅ Setup complete!"
 echo ""
 echo "To run the application:"  
-echo "   pnpm start"
+echo "   bun run start"
 echo ""

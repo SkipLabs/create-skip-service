@@ -1,1 +1,1 @@
-pnpm pre-push
+bun run pre-push

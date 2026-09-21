@@ -10,30 +10,32 @@ This is a CLI tool (`create-skip-service`) that bootstraps Skip services with va
 
 ```bash
 # Development
-pnpm install          # Install dependencies
-pnpm build           # Build the TypeScript project
-pnpm dev             # Build with watch mode for development
-pnpm start           # Run the built CLI
-pnpm clean           # Clean build artifacts
-pnpm format          # Format code with Prettier
+bun install             # Install dependencies (Bun is the package manager; runtime stays Node.js)
+bun run build           # Build the TypeScript project
+bun run dev             # Build with watch mode for development
+bun run start           # Run the built CLI
+bun run clean           # Clean build artifacts
+bun run format          # Format code with Prettier
 
 # Testing
-pnpm test            # Run tests in watch mode
-pnpm test:run        # Run tests once
-pnpm test:ui         # Run tests with UI
-pnpm test:coverage   # Run tests with coverage report
-pnpm typecheck       # Type checking without emitting
+bun run test            # Run tests in watch mode
+bun run test:run        # Run tests once
+bun run test:ui         # Run tests with UI
+bun run test:coverage   # Run tests with coverage report
+bun run typecheck       # Type checking without emitting
 
 # Git hooks (run automatically)
-pnpm pre-commit      # Prettier + test:run (runs before commits)
-pnpm pre-push        # test:run + typecheck (runs before pushes)
+bun run pre-commit      # Prettier + test:run (runs before commits)
+bun run pre-push        # test:run + typecheck (runs before pushes)
 
 # Testing the CLI locally
 node dist/cli.js <project-name> [options]
 
 # Running a single test file
-pnpm vitest run src/__tests__/cli.test.ts
+bun run vitest run src/__tests__/cli.test.ts
 ```
+
+Always use `bun run <script>`: bare `bun test` and `bun build` invoke Bun's own test runner and bundler, not the package scripts.
 
 ## Architecture
 
@@ -91,11 +93,12 @@ The `Config` type defines the execution context with project name, paths, git se
 ## Important Notes
 
 - Uses ES modules (`"type": "module"` in package.json)
-- Built as an npm package with bin entry point; `pnpm build` uses `tsconfig.build.json`, which excludes tests from `dist/`
+- Built as an npm package with bin entry point; `bun run build` uses `tsconfig.build.json`, which excludes tests from `dist/`
 - Templates and examples are downloaded from separate GitHub repositories; set `GITHUB_TOKEN` to avoid the unauthenticated GitHub API rate limit (~60 requests/hour)
 - Error recovery includes automatic cleanup of partially created projects
-- Husky is configured for pre-commit hooks (lint-staged + test:run) and pre-push hooks (test:run + typecheck)
+- Package manager: Bun (`bun.lock` in the root and in each template). Templates whitelist `@skipruntime/native`'s node-gyp install script via `trustedDependencies`; the CLI and services still run on Node.js
+- Husky is configured for pre-commit hooks (lint-staged + test:run) and pre-push hooks (test:run + typecheck); `bun` must be on the PATH git sees
 - Test framework: Vitest with Node.js environment; tests live in `src/__tests__/` (vitest is scoped to `src/` so stale compiled tests in `dist/` never run)
-- CI (CircleCI) runs the root suite on Node 22/24, a repo-wide Prettier check (`make check-format`), and builds/lints every template package (`make check-templates`)
+- CI (CircleCI) installs a pinned Bun on `cimg/node` images and runs the root suite on Node 22/24, a repo-wide Prettier check (`make check-format`), and builds/lints every template package (`make check-templates`)
 - TypeScript with strict configuration and ES2022 target
 - Dependencies: Commander.js (CLI), Chalk (colors), Execa (git invocation)

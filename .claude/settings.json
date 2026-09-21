@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_response.filePath // .tool_input.file_path' | { read -r f; case \"$f\" in *.ts|*.tsx|*.js|*.jsx|*.mjs|*.cjs|*.mts|*.cts|*.json|*.md|*.sql) (cd \"$CLAUDE_PROJECT_DIR\" && pnpm exec prettier --log-level warn --ignore-path .prettierignore --write \"$f\") >&2 ;; esac; }"
+            "command": "jq -r '.tool_response.filePath // .tool_input.file_path' | { read -r f; case \"$f\" in *.ts|*.tsx|*.js|*.jsx|*.mjs|*.cjs|*.mts|*.cts|*.json|*.md|*.sql) (cd \"$CLAUDE_PROJECT_DIR\" && bun run prettier --log-level warn --ignore-path .prettierignore --write \"$f\") >&2 ;; esac; }"
           }
         ]
       }

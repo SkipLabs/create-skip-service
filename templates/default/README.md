@@ -18,9 +18,9 @@ npx create-skip-service my-service
 
 cd my-service
 
-pnpm install
-pnpm build
-pnpm start
+bun install
+bun run build
+bun run start
 ```
 
 ## Features
@@ -35,10 +35,10 @@ pnpm start
 
 In the project directory, you can run:
 
-- `pnpm build` - Builds the service for production
-- `pnpm start` - Runs the built service
-- `pnpm clean` - Cleans build artifacts and dependencies
-- `pnpm format` - Formats code using Prettier
+- `bun run build` - Builds the service for production
+- `bun run start` - Runs the built service
+- `bun run clean` - Cleans build artifacts and dependencies
+- `bun run format` - Formats code using Prettier
 
 ## Project Structure
 
@@ -68,7 +68,7 @@ The template includes the following API endpoints:
 ### Prerequisites
 
 - Node.js ≥ 22.12 (Latest LTS recommended)
-- pnpm package manager
+- Bun ≥ 1.3 (package manager; the service itself runs on Node.js)
 
 ### Service Ports
 
@@ -83,7 +83,7 @@ The service runs on the following ports:
 1. Start the service:
 
 ```bash
-pnpm start
+bun run start
 ```
 
 2. Listen to a user's active friends:

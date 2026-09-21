@@ -7,7 +7,7 @@ A CLI tool to bootstrap Skip services with various templates. It provides a quic
 [![CI](https://circleci.com/gh/SkipLabs/create-skip-service.svg?style=shield)](https://circleci.com/gh/SkipLabs/create-skip-service)
 [![npm downloads](https://img.shields.io/npm/dm/create-skip-service.svg)](https://www.npmjs.com/package/create-skip-service)
 
-[![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff.svg)](https://pnpm.io/)
+[![Bun](https://img.shields.io/badge/maintained%20with-bun-f9f1e1.svg?logo=bun&logoColor=black)](https://bun.sh/)
 [![Node.js](https://img.shields.io/badge/Node.js-22.12%2B-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 
 ## Usage
@@ -18,7 +18,7 @@ To create a new Skip service, run:
 npx create-skip-service <project-name> [options]
 ```
 
-> **Requirements:** Node.js ≥ 22.12.0.
+> **Requirements:** Node.js ≥ 22.12.0. Generated projects use [Bun](https://bun.sh/) ≥ 1.3 as their package manager (the services themselves run on Node.js).
 
 ### Options
 
@@ -73,32 +73,32 @@ A full-stack chat application template that includes:
 
 To work on this tool locally:
 
-1. Clone the repository
+1. Clone the repository (requires [Bun](https://bun.sh/) ≥ 1.3 and Node.js ≥ 22.12)
 2. Install dependencies:
    ```bash
-   pnpm install
+   bun install
    ```
 3. Build the project:
    ```bash
-   pnpm build
+   bun run build
    ```
 4. Run in development mode:
    ```bash
-   pnpm dev
+   bun run dev
    ```
 
 ## Scripts
 
-- `pnpm build` - Build the project
-- `pnpm start` - Run the CLI
-- `pnpm dev` - Run in development mode with watch
-- `pnpm clean` - Clean build artifacts
-- `pnpm format` - Format code with Prettier
-- `pnpm test` - Run tests in watch mode
-- `pnpm test:run` - Run tests once
-- `pnpm test:ui` - Run tests with UI
-- `pnpm test:coverage` - Run tests with coverage report
-- `pnpm typecheck` - Type checking without emitting
+- `bun run build` - Build the project
+- `bun run start` - Run the CLI
+- `bun run dev` - Run in development mode with watch
+- `bun run clean` - Clean build artifacts
+- `bun run format` - Format code with Prettier
+- `bun run test` - Run tests in watch mode
+- `bun run test:run` - Run tests once
+- `bun run test:ui` - Run tests with UI
+- `bun run test:coverage` - Run tests with coverage report
+- `bun run typecheck` - Type checking without emitting
 
 ### Testing the CLI locally
 

@@ -36,11 +36,11 @@ cd my-service
 
 In the project directory, you can run:
 
-- `pnpm build` - Builds the service for production
-- `pnpm start` - Runs the built service
-- `pnpm clean` - Cleans build artifacts and dependencies
-- `pnpm format` - Formats code using Prettier
-- `pnpm client` - Runs the example client
+- `bun run build` - Builds the service for production
+- `bun run start` - Runs the built service
+- `bun run clean` - Cleans build artifacts and dependencies
+- `bun run format` - Formats code using Prettier
+- `bun run client` - Runs the example client
 
 ## API Structure
 
@@ -69,7 +69,7 @@ The template includes the following API endpoints:
 ### Prerequisites
 
 - Node.js ≥ 22.12 (Latest LTS recommended)
-- pnpm package manager
+- Bun ≥ 1.3 (package manager; the service itself runs on Node.js)
 - Docker (for PostgreSQL)
 
 ### Clean Up
@@ -77,7 +77,7 @@ The template includes the following API endpoints:
 To clean up the development environment:
 
 ```bash
-pnpm clean
+bun run clean
 docker stop skip-demo-postgres && docker rm skip-demo-postgres
 ```
 

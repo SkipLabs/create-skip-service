@@ -17,12 +17,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (previously only in `--verbose`).
 - `--quiet` now silences the download progress spinner.
 - Declining the overwrite prompt exits with code 0 instead of 1.
-- `pnpm test:coverage` works (added the missing `@vitest/coverage-v8`).
+- `bun run test:coverage` works (added the missing `@vitest/coverage-v8`).
 - The npm tarball no longer ships compiled tests, and `prettier` is no longer
   installed as a runtime dependency.
 
 ### Changed
 
+- **Package manager switched from pnpm to Bun** for the CLI repo and every
+  template. Install with `bun install` and run scripts with `bun run <script>`;
+  lockfiles are now `bun.lock`. The runtime is unchanged: the CLI and generated
+  services still run on Node.js ≥ 22.12 and tests still run on Vitest.
+  `@skipruntime/native` is whitelisted through `trustedDependencies` instead of
+  `pnpm-workspace.yaml`, and the unused `reactive_service/bootstrap.sh` was
+  removed. The `with_react_vite` next-steps output now points at `./setup.sh`
+  instead of a non-existent root package.
 - **Dependency upgrade (root CLI).** TypeScript 6 → 7 (native Go `tsc`),
   Vitest 4 → 5, chalk 5 → 6, execa 9 → 10, `@types/node` 25 → 26, plus the
   latest Vite, Prettier, lint-staged and prettier-plugin-sql. No source changes
@@ -34,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   programmatic API). The `with_react_vite` chat form now uses
   `React.SubmitEvent`, since `@types/react` 19.3 deprecates `FormEvent`.
 - `coverage/` is now excluded from the Prettier check so `make check-format`
-  passes after running `pnpm test:coverage`.
+  passes after running `bun run test:coverage`.
 - `GITHUB_TOKEN` is honored on GitHub API requests to raise the rate limit.
 - Filesystem operations use `fs/promises` instead of shelling out to
   `rm`/`mkdir`/`chmod`; `execa` is only used for git.
