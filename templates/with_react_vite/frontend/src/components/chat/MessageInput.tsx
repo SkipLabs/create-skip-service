@@ -27,7 +27,7 @@ export function MessageInput({
     }
   }, [disabled, inputRef]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     setDisabled(true);
     if (!newMessage.trim()) {

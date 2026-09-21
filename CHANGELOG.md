@@ -23,6 +23,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Dependency upgrade (root CLI).** TypeScript 6 → 7 (native Go `tsc`),
+  Vitest 4 → 5, chalk 5 → 6, execa 9 → 10, `@types/node` 25 → 26, plus the
+  latest Vite, Prettier, lint-staged and prettier-plugin-sql. No source changes
+  were needed; the Node.js ≥ 22.12 baseline is unchanged.
+- **Dependency upgrade (templates).** All template packages bumped to the latest
+  Fastify, pg, React 19.3, Vite 8.3, ESLint 10.11, typescript-eslint 8.70 and
+  friends. Templates stay on TypeScript 6.x and `@types/node` 22.x because
+  typescript-eslint does not yet support TypeScript 7 (which ships without a
+  programmatic API). The `with_react_vite` chat form now uses
+  `React.SubmitEvent`, since `@types/react` 19.3 deprecates `FormEvent`.
+- `coverage/` is now excluded from the Prettier check so `make check-format`
+  passes after running `pnpm test:coverage`.
 - `GITHUB_TOKEN` is honored on GitHub API requests to raise the rate limit.
 - Filesystem operations use `fs/promises` instead of shelling out to
   `rm`/`mkdir`/`chmod`; `execa` is only used for git.
